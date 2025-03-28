@@ -1,39 +1,70 @@
-/* Device Info */
-.device-info {
-    background: #f5f5f5;
+/* General Layout */
+.sensor-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 800px;
+    background-color: #ffffff;
+    overflow: hidden;
+  }
+  
+  /* Section Titles */
+  .sensor-card h3, .sensor-card h4 {
+    margin: 0;
+    padding: 10px;
+    font-size: 1.2em;
+    background-color: #5a6e83; /* Blue header background */
+    color: #fff; /* White text */
+  }
+  
+  /* Device Info */
+  .device-info {
     padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
+  }
+  
+  .device-info p {
+    margin: 5px 0;
   }
   
   /* Gateway Section */
   .gateway-section {
-    margin: 15px 0;
     padding: 15px;
-    border: 1px solid #eee;
-    border-radius: 8px;
+  }
+  
+  .gateway-section h4 {
+    margin-bottom: 10px;
   }
   
   .gateway {
-    margin: 10px 0;
-    padding: 10px;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    display: flex; /* Flexbox for inline layout */
+    justify-content: space-between; /* Space between position and signal details */
+    align-items: center;
+    border-bottom: 1px solid #ddd; /* Divider between gateways */
+    padding: 5px;
+  }
+  
+  .gateway:last-child {
+    border-bottom: none; /* Remove divider for the last gateway */
+  }
+  
+  .gateway p {
+    margin: 0;
   }
   
   /* Data Section */
   .data-section {
-    background: #1a1a1a;
-    color: #00ff9d;
-    padding: 15px;
-    border-radius: 8px;
-    overflow-x: auto;
+    padding: 20px;
+  }
+  
+  .data-section h4 {
+    margin-bottom: 10px;
   }
   
   .data-section pre {
-    margin: 0;
-    font-family: 'Courier New', monospace;
-    font-size: 0.9em;
+    padding: 15px;
+    background-color: #333; /* Darker background for data section */
+    color: #00ff9d; /* Neon green text for data */
+    border-radius: 6px;
   }
   
