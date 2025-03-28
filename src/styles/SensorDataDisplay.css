@@ -1,41 +1,39 @@
-/* General container styling */
-.sensor-data-container {
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .sensor-data-container h1 {
-    text-align: center;
-    color: #333;
-  }
-  
-  /* Card styling */
-  .sensor-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+/* Device Info */
+.device-info {
+    background: #f5f5f5;
     padding: 15px;
-    margin-bottom: 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
   }
   
-  .sensor-card p {
-    margin: 5px 0;
+  /* Gateway Section */
+  .gateway-section {
+    margin: 15px 0;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 8px;
   }
   
-  .sensor-card strong {
-    color: #555;
+  .gateway {
+    margin: 10px 0;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
   }
   
-  /* Loading and error messages */
-  .loading {
-    text-align: center;
-    font-size: larger;
+  /* Data Section */
+  .data-section {
+    background: #1a1a1a;
+    color: #00ff9d;
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
   }
   
-  .error {
-    text-align: center;
-    color: red;
+  .data-section pre {
+    margin: 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
   }
   
