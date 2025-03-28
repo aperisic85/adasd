@@ -1,0 +1,41 @@
+/* General container styling */
+.sensor-data-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .sensor-data-container h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  /* Card styling */
+  .sensor-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .sensor-card p {
+    margin: 5px 0;
+  }
+  
+  .sensor-card strong {
+    color: #555;
+  }
+  
+  /* Loading and error messages */
+  .loading {
+    text-align: center;
+    font-size: larger;
+  }
+  
+  .error {
+    text-align: center;
+    color: red;
+  }
+  
