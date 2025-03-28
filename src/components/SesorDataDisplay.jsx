@@ -16,7 +16,7 @@ const SensorDataDisplay = () => {
         setLoading(true);
         const responses = await Promise.all(
           deviceEUIs.map((eui) =>
-            axios.get(`http://localhost:3000/api/data/${eui}`)
+            axios.get(`http://ina.plovput.hr:8080/api/data/${eui}`)
           )
         );
         const data = responses.map((response) => response.data);
