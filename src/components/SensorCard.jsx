@@ -8,6 +8,7 @@ import ErrorBoundary from "./ErrorBoundary";
 // src/components/SensorCard.jsx
 const SensorCard = ({ sensor }) => {
     const gateways = formatGatewayInfo(sensor.gws);
+    const parsedData = parseSensorData(sensor.data); // Parse the sensor data
 
     return (
         <div className="sensor-card">
@@ -35,7 +36,19 @@ const SensorCard = ({ sensor }) => {
             {/* Data Section */}
             <div className="data-section">
                 <h4>Podaci</h4>
-                <pre>{parseSensorData(sensor.data)}</pre>
+                <div>
+                    <h5>Station A</h5>
+                    <p><strong>Status:</strong> {parsedData.stationA.status.join(", ")}</p>
+                    <p><strong>Alarm:</strong> {parsedData.stationA.alarm.join(", ")}</p>
+                </div>
+                <div>
+                    <h5>Other Stations</h5>
+                    {parsedData.stations.map((station, index) => (
+                        <div key={index}>
+                            <p><strong>Station {String.fromCharCode(66 + index)}:</strong> {station.join(", ")}</p>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     );
