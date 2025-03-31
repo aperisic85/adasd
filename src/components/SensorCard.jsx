@@ -19,7 +19,7 @@ const DataSection = ({ parsedData }) => (
     <h4>Podaci</h4>
     {/* Station A */}
     <div className="station-card">
-      <h5>Pozicija A</h5>
+      <h5>Pozicija 0 -Dataloger</h5>
       <div className="station-info">
         <p><strong>Status:</strong> {parsedData.stationA.status.join(", ")}</p>
         <p><strong>Alarm:</strong> {parsedData.stationA.alarm.join(", ")}</p>
@@ -30,7 +30,7 @@ const DataSection = ({ parsedData }) => (
     <div className="stations">
       {parsedData.stations.map((station, index) => (
         <div key={index} className="station-card">
-          <h5>Pozicija {String.fromCharCode(66 + index)}</h5> {/* Converts index to letters (B, C, D, ...) */}
+          <h5>Pozicija {index +  1}</h5> {/* Converts index to letters (B, C, D, ...) */}
           <div className="station-info">
             <p><strong>Status:</strong> {station.slice(0, 2).join(", ")}</p>
             <p><strong>Alarm:</strong> {station.slice(2, 4).join(", ")}</p>
