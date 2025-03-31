@@ -16,7 +16,7 @@ const SensorDataDisplay = () => {
         setLoading(true);
         const responses = await Promise.all(
           deviceEUIs.map((eui) =>
-            axios.get(`http://ina.plovput.hr/api/data/${eui}`)
+            axios.get(`https://ina.plovput.hr/api/data/${eui}`)
           )
         );
         const data = responses.map((response) => response.data);
@@ -37,7 +37,7 @@ const SensorDataDisplay = () => {
 
   return (
     <div className="sensor-data-container">
-      <h1>Sensor Data</h1>
+      <h1>INA Platforme</h1>
       {sensorData.map((sensor, index) => (
         <SensorCard key={index} sensor={sensor} />
       ))}
