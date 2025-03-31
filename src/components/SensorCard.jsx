@@ -3,6 +3,7 @@ import "../styles/SensorDataDisplay.css";
 import { parseBatteryPercentage } from "../utils/batteryUtils";
 import { parseSensorData } from "../utils/dataUtils";
 import { formatGatewayInfo } from "../utils/gatewayUtils";
+import { decodeStatus, decodeAlarm } from "../utils/dataUtils";
 
 const DeviceInfo = ({ sensor }) => (
   <div className="device-info">
@@ -13,33 +14,83 @@ const DeviceInfo = ({ sensor }) => (
     <p><strong>Posljednji podaci:</strong> {new Date(sensor.received_at).toLocaleString()}</p>
   </div>
 );
+// Helper for battery status text
+const getBatteryStatusText = (statusCode) => {
+  switch(statusCode) {
+    case 0: return "Normal";
+    case 1: return "Flat";
+    case 2: return "Low";
+    default: return "Unknown";
+  }
+};
+const DataSection = ({ parsedData }) => {
+  // Decode Station A status and alarms
+  const stationAStatus = decodeStatus(parsedData.stationA.status);
+  const stationAAlarms = decodeAlarm(parsedData.stationA.alarm);
 
-const DataSection = ({ parsedData }) => (
-  <div className="data-section">
-    <h4>Podaci</h4>
-    {/* Station A */}
-    <div className="station-card">
-      <h5>Pozicija 0 -Dataloger</h5>
-      <div className="station-info">
-        <p><strong>Status:</strong> {parsedData.stationA.status}</p>
-        <p><strong>Alarm:</strong> {parsedData.stationA.alarm}</p>
+  return (
+    <div className="data-section">
+      <h4>Podaci</h4>
+      
+      {/* Station A */}
+      <div className="station-card">
+        <h5>Pozicija A</h5>
+        <div className="station-info">
+          <p><strong>Status:</strong></p>
+          <ul>
+            <li>Battery: {getBatteryStatusText(stationAStatus.batteryStatus)}</li>
+            <li>Solar Panel Daylight: {stationAStatus.solarPanelDaylight ? "Yes" : "No"}</li>
+          </ul>
+          
+          <p><strong>Alarmi:</strong></p>
+          <ul>
+            {stationAAlarms.tempOver60 && <li>Temperature {">"} 60°C</li>}
+            {stationAAlarms.tempOver70 && <li>Temperature {">"}  70°C</li>}
+            {stationAAlarms.tempOver80 && <li>Temperature {">"}  80°C</li>}
+            {stationAAlarms.voltageOver16 && <li>Voltage {">"} 16V</li>}
+            {stationAAlarms.voltageOver18 && <li>Voltage  {">"} 18V</li>}
+            {stationAAlarms.batteryLow && <li>Battery Low</li>}
+            {stationAAlarms.batteryFlat && <li>Battery Flat</li>}
+          </ul>
+        </div>
+      </div>
+
+      {/* Other Stations */}
+      <div className="stations">
+        {parsedData.stations.map((station, index) => {
+          const stationStatus = decodeStatus(station.status);
+          const stationAlarms = decodeAlarm(station.alarm);
+
+          return (
+            <div key={index} className="station-card">
+              <h5>Pozicija {String.fromCharCode(66 + index)}</h5>
+              <div className="station-info">
+              <p><strong>Status:</strong></p>
+          <ul>
+            <li>Battery: {getBatteryStatusText(stationStatus.batteryStatus)}</li>
+            <li>Solar Panel Daylight: {stationStatus.solarPanelDaylight ? "Yes" : "No"}</li>
+          </ul>
+              <p><strong>Alarmi:</strong></p>
+          <ul>
+            {stationAlarms.tempOver60 && <li>Temperature {">"} 60°C</li>}
+            {stationAlarms.tempOver70 && <li>Temperature {">"}  70°C</li>}
+            {stationAlarms.tempOver80 && <li>Temperature {">"}  80°C</li>}
+            {stationAlarms.voltageOver16 && <li>Voltage {">"} 16V</li>}
+            {stationAlarms.voltageOver18 && <li>Voltage  {">"} 18V</li>}
+            {stationAlarms.batteryLow && <li>Battery Low</li>}
+            {stationAlarms.batteryFlat && <li>Battery Flat</li>}
+          </ul>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
+  );
+};
 
-    {/* Other Stations */}
-    <div className="stations">
-      {parsedData.stations.map((station, index) => (
-        <div key={index} className="station-card">
-          <h5>Pozicija {index +  1}</h5> {/* Converts index to letters (B, C, D, ...) */}
-          <div className="station-info">
-            <p><strong>Status:</strong> {station.status}</p>
-            <p><strong>Alarm:</strong> {station.alarm}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-);
+
+
 
 const SensorCard = ({ sensor }) => {
   const gateways = formatGatewayInfo(sensor.gws);
