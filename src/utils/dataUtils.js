@@ -57,3 +57,15 @@ export function parseSensorData(hexString) {
     rawBytes: bytes // Include raw bytes for debugging
   };
 }
+export function formatGatewayInfo(gateways) {
+  if (!Array.isArray(gateways)) {
+    throw new Error("Invalid gateways data: Expected an array");
+  }
+
+  return gateways.map((gateway) => ({
+    lat: gateway.latitude || "N/A",
+    lng: gateway.longitude || "N/A",
+    rssi: gateway.rssi || "N/A",
+    snr: gateway.snr || "N/A",
+  }));
+}

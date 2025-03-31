@@ -53,13 +53,15 @@ const SensorCard = ({ sensor }) => {
       {/* Gateway Info */}
       <div className="gateway-section">
         <h4>Gateways ({gateways.length})</h4>
-        {gateways.map((gw, index) => (
-          <div key={index} className="gateway">
-            <p><strong>Pozicija:</strong> {gw.lat}, {gw.lng}</p>
-            <p><strong>RSSI:</strong> {gw.rssi} dBm</p>
-            <p><strong>SNR:</strong> {gw.snr}</p>
-          </div>
-        ))}
+        {/* Compact Gateway Section */}
+        <div className="compact-gateways">
+          {gateways.map((gw, index) => (
+            <div key={index} className="gateway-compact">
+              <p><strong>RSSI:</strong> {gw.rssi} dBm</p>
+              <p><strong>SNR:</strong> {gw.snr}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Data Section */}

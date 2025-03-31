@@ -110,3 +110,66 @@
       gap : 10px; /* Add gap between elements */
   }
 }
+
+/* General Layout */
+.sensor-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  max-width: 800px;
+  background-color: #ffffff;
+}
+
+/* Section Titles */
+.sensor-card h3, .sensor-card h4 {
+  margin: 0;
+  padding: 10px;
+  font-size: 1.2em;
+  background-color: #5a6e83; /* Blue header background */
+  color: #fff; /* White text */
+}
+
+/* Device Info */
+.device-info {
+  padding: 15px;
+}
+
+.device-info p {
+  margin: 5px 0;
+}
+
+/* Compact Gateway Section */
+.gateway-section {
+  padding: 10px; /* Reduce padding */
+}
+
+.gateway-section h4 {
+  font-size: 1em; /* Smaller title */
+}
+
+.compact-gateways {
+  display: grid; /* Use a grid layout for compact display */
+  grid-template-columns: repeat(auto-fit, minmax(150px, auto)); /* Responsive columns */
+}
+
+.gateway-compact {
+  background-color: #f9f9f9; /* Light background for contrast */
+  border-radius: 6px; /* Rounded corners */
+  padding: 8px; /* Compact padding */
+}
+
+.gateway-compact p {
+  margin: 3px;
+}
+
+/* Data Section Styling */
+.data-section {
+  padding: 20px;
+}
+
+.data-section h4 {
+  font-size: larger; /* Emphasize data section title */
+}
+
+
