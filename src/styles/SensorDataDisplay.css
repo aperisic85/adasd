@@ -71,9 +71,9 @@
 }
 
 .station-card {
-  background-color: #f0f0f0; /* White background for contrast */
+  background-color: #ffffff; /* White background for contrast */
   border-radius: 8px; /* Rounded corners */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
   padding: 15px; /* Add spacing inside the card */
   margin-bottom: 10px;;
 }
