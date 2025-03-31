@@ -23,40 +23,58 @@ export function hexStringToBytes(hexString) {
 }
 
 export function parseSensorData(hexString) {
-  if (!hexString || hexString.length < 8) {
-    throw new Error('Invalid sensor data: minimum 4 bytes (8 hex characters) required');
+  // Validate minimum length (1 station label byte + 4 bytes for Station A)
+  if (!hexString || hexString.length < 10) { // 5 bytes = 10 hex characters
+    throw new Error('Invalid sensor data: minimum 5 bytes (10 hex characters) required');
   }
 
   const bytes = hexStringToBytes(hexString);
-  
-  // Parse Station A (first 4 bytes)
+
+  // Extract station label (first byte)
+  const stationLabel = bytes[0]; // First byte is the station label
+  const dataBytes = bytes.slice(1); // Sensor data starts from byte 1
+
+  // Validate Station A data exists
+  if (dataBytes.length < 4) {
+    throw new Error('Invalid sensor data: incomplete Station A data');
+  }
+
+  // Helper function to convert two bytes into a single value (big-endian)
+  const bytesToUInt16BE = (byteArray) => (byteArray[0] << 8) | byteArray[1];
+
+  // Parse Station A (first 4 bytes of data)
   const stationA = {
-    status: bytes.slice(0, 2),
-    alarm: bytes.slice(2, 4)
+    status: bytesToUInt16BE(dataBytes.slice(0, 2)), // Combine first two bytes into one value
+    alarm: bytesToUInt16BE(dataBytes.slice(2, 4))   // Combine next two bytes into one value
   };
-  
-  // Parse remaining stations (4 bytes each)
+
+  // Parse remaining stations (4 bytes each: status + alarm)
   const stations = [];
   const stationSize = 4;
-  
-  for (let i = 4; i < bytes.length; i += stationSize) {
-    const stationBytes = bytes.slice(i, i + stationSize);
-    
-    // Handle incomplete station data
-    if (stationBytes.length < stationSize) {
+
+  for (let i = 4; i < dataBytes.length; i += stationSize) {
+    const endIndex = i + stationSize;
+
+    if (endIndex > dataBytes.length) {
       console.warn(`Incomplete station data at position ${i}`);
-      continue;
+      break;
     }
-    
-    stations.push(stationBytes);
+
+    stations.push({
+      status: bytesToUInt16BE(dataBytes.slice(i, i + 2)), // Combine first two bytes of station into one value
+      alarm: bytesToUInt16BE(dataBytes.slice(i + 2, endIndex)) // Combine next two bytes of station into one value
+    });
   }
-  
+
   return {
+    stationLabel, // Include the station label
     stationA,
     stations,
-    rawBytes: bytes // Include raw bytes for debugging
+    rawBytes: bytes // Original byte array for debugging
   };
 }
+
+
 export function formatGatewayInfo(gateways) {
   if (!Array.isArray(gateways)) {
     throw new Error("Invalid gateways data: Expected an array");
