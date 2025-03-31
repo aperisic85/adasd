@@ -44,7 +44,7 @@ const DataSection = ({ parsedData }) => {
           
           <p><strong>Alarmi:</strong></p>
           <ul>
-            {stationAAlarms.tempOver60 && <li>Temperature {">"} 60°C</li>}
+            {stationAAlarms.tempOver60 &&  <li>Temperature {">"} 60°C</li>}
             {stationAAlarms.tempOver70 && <li>Temperature {">"}  70°C</li>}
             {stationAAlarms.tempOver80 && <li>Temperature {">"}  80°C</li>}
             {stationAAlarms.voltageOver16 && <li>Voltage {">"} 16V</li>}
