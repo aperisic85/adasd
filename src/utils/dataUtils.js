@@ -1,29 +1,59 @@
-function hexStringToBytes(hexString) {
-  const bytes = [];
-  for (let i = 0; i < hexString.length; i += 2) {
-      bytes.push(parseInt(hexString.substr(i, 2), 16));
+export function hexStringToBytes(hexString) {
+  // Validate input format
+  if (typeof hexString !== 'string' || !/^[0-9a-fA-F]+$/.test(hexString)) {
+    throw new Error('Invalid hex string format');
   }
+
+  // Pad with leading zero if odd length
+  const normalizedHex = hexString.length % 2 !== 0 
+    ? `0${hexString}` 
+    : hexString;
+
+  const bytes = new Uint8Array(normalizedHex.length / 2);
+  
+  for (let i = 0; i < normalizedHex.length; i += 2) {
+    const byteValue = parseInt(normalizedHex.substr(i, 2), 16);
+    if (isNaN(byteValue)) {
+      throw new Error(`Invalid hex byte at position ${i}`);
+    }
+    bytes[i/2] = byteValue;
+  }
+  
   return bytes;
 }
 
 export function parseSensorData(hexString) {
+  if (!hexString || hexString.length < 8) {
+    throw new Error('Invalid sensor data: minimum 4 bytes (8 hex characters) required');
+  }
+
   const bytes = hexStringToBytes(hexString);
   
-  // First 4 bytes for station A
+  // Parse Station A (first 4 bytes)
   const stationA = {
-      status: bytes.slice(0, 2),
-      alarm: bytes.slice(2, 4)
+    status: bytes.slice(0, 2),
+    alarm: bytes.slice(2, 4)
   };
   
-  // Remaining bytes for stations B, C, D, etc.
+  // Parse remaining stations (4 bytes each)
   const stations = [];
-  for (let i = 4; i < bytes.length; i += 4) {
-      stations.push(bytes.slice(i, i + 4));
+  const stationSize = 4;
+  
+  for (let i = 4; i < bytes.length; i += stationSize) {
+    const stationBytes = bytes.slice(i, i + stationSize);
+    
+    // Handle incomplete station data
+    if (stationBytes.length < stationSize) {
+      console.warn(`Incomplete station data at position ${i}`);
+      continue;
+    }
+    
+    stations.push(stationBytes);
   }
   
-  return { stationA, stations };
+  return {
+    stationA,
+    stations,
+    rawBytes: bytes // Include raw bytes for debugging
+  };
 }
-
-
-
-

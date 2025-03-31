@@ -1,70 +1,112 @@
 /* General Layout */
 .sensor-card {
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 20px auto;
-    max-width: 800px;
-    background-color: #ffffff;
-    overflow: hidden;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  max-width: 800px;
+  background-color: #ffffff;
+  overflow: hidden;
+  font-family: Arial, sans-serif; /* Clean font for readability */
+}
+
+/* Section Titles */
+.sensor-card h3, .sensor-card h4 {
+  margin: 0;
+  padding: 10px;
+  font-size: 1.2em;
+  background-color: #5a6e83; /* Blue header background */
+  color: #fff; /* White text */
+  border-bottom: 2px solid #4a5a6b; /* Subtle border for separation */
+}
+
+/* Device Info */
+.device-info {
+  padding: 15px;
+}
+
+.device-info p {
+  margin: 5px 0;
+  font-size: 14px; /* Smaller font for details */
+}
+
+.device-info strong {
+  color: #333333; /* Highlight important text */
+}
+
+/* Gateway Section */
+.gateway-section {
+  padding: 15px;
+}
+
+.gateway-section h4 {
+  margin-bottom: 10px;
+}
+
+.gateway {
+  display: flex; /* Flexbox for inline layout */
+  justify-content: space-between; /* Space between position and signal details */
+  align-items: center;
+  border-bottom: 1px solid #ddd; /* Divider between gateways */
+  padding: 10px; /* Increased padding for better spacing */
+}
+
+.gateway:last-child {
+  border-bottom: none; /* Remove divider for the last gateway */
+}
+
+.gateway p {
+  margin: 0;
+}
+
+/* Data Section */
+.data-section {
+  padding: 20px;
+}
+
+.data-section h4 {
+  margin-bottom: 10px;
+}
+
+.data-section .station-card {
+  background-color: #f9f9f9; /* Light background for station cards */
+  border-radius: 8px; /* Rounded corners for cards */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  padding: 15px; /* Add spacing inside the cards */
+  margin-bottom: 10px; /* Separate cards visually */
+}
+
+.data-section .station-card h5 {
+  font-size: 1.1em; /* Slightly larger font for station titles */
+  margin-bottom: 8px;
+}
+
+.data-section .station-info p {
+  font-size: 14px; /* Smaller font for detailed information */
+}
+
+/* Highlighted Data Styling (Optional) */
+.data-section pre {
+  padding: 15px;
+  background-color: #333; /* Darker background for data section */
+  color: #00ff9d; /* Neon green text for data */
+  border-radius: 6px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sensor-card {
+      padding: 15px; /* Reduce padding on smaller screens */
+      margin: 10px auto; /* Adjust margins for smaller screens */
+      max-width: calc(100% - 20px); /* Make card fit smaller screens better */
+      box-shadow: none; /* Remove shadow on very small screens for simplicity */
+      border-radius: 5px;
   }
-  
-  /* Section Titles */
-  .sensor-card h3, .sensor-card h4 {
-    margin: 0;
-    padding: 10px;
-    font-size: 1.2em;
-    background-color: #5a6e83; /* Blue header background */
-    color: #fff; /* White text */
-  }
-  
-  /* Device Info */
-  .device-info {
-    padding: 15px;
-  }
-  
-  .device-info p {
-    margin: 5px 0;
-  }
-  
-  /* Gateway Section */
-  .gateway-section {
-    padding: 15px;
-  }
-  
-  .gateway-section h4 {
-    margin-bottom: 10px;
-  }
-  
+
   .gateway {
-    display: flex; /* Flexbox for inline layout */
-    justify-content: space-between; /* Space between position and signal details */
-    align-items: center;
-    border-bottom: 1px solid #ddd; /* Divider between gateways */
-    padding: 5px;
+      flex-direction: column; /* Stack content vertically on smaller screens */
+      align-items: flex-start; 
+      padding-bottom: 10px;
+      gap : 10px; /* Add gap between elements */
   }
-  
-  .gateway:last-child {
-    border-bottom: none; /* Remove divider for the last gateway */
-  }
-  
-  .gateway p {
-    margin: 0;
-  }
-  
-  /* Data Section */
-  .data-section {
-    padding: 20px;
-  }
-  
-  .data-section h4 {
-    margin-bottom: 10px;
-  }
-  
-  .data-section pre {
-    padding: 15px;
-    background-color: #333; /* Darker background for data section */
-    color: #00ff9d; /* Neon green text for data */
-    border-radius: 6px;
-  }
-  
+}
