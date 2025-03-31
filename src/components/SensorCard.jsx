@@ -14,9 +14,10 @@ const SensorCard = ({ sensor }) => {
             {/* Device Info */}
             <div className="device-info">
                 <h3>Device Info</h3>
+                <p><strong>Naziv:</strong> {sensor.EUI === '513F167B004A0024' ? 'Izabela South' : 'Izabela North'}</p>
                 <p><strong>EUI:</strong> {sensor.EUI}</p>
-                <p><strong>Battery:</strong> {parseBatteryPercentage(sensor.bat)}</p>
-                <p><strong>Last Update:</strong> {new Date(sensor.received_at).toLocaleString()}</p>
+                <p><strong>Baterija:</strong> {parseBatteryPercentage(sensor.bat)}</p>
+                <p><strong>Posljednji podaci:</strong> {new Date(sensor.received_at).toLocaleString()}</p>
             </div>
 
             {/* Gateway Info */}
@@ -24,7 +25,7 @@ const SensorCard = ({ sensor }) => {
                 <h4>Gateways ({gateways.length})</h4>
                 {gateways.map((gw, index) => (
                     <div key={index} className="gateway">
-                        <p><strong>Position:</strong> {gw.lat}, {gw.lng}</p>
+                        <p><strong>Pozicija:</strong> {gw.lat}, {gw.lng}</p>
                         <p><strong>RSSI:</strong> {gw.rssi} dBm</p>
                         <p><strong>SNR:</strong> {gw.snr}</p>
                     </div>
@@ -33,7 +34,7 @@ const SensorCard = ({ sensor }) => {
 
             {/* Data Section */}
             <div className="data-section">
-                <h4>Data</h4>
+                <h4>Podaci</h4>
                 <pre>{parseSensorData(sensor.data)}</pre>
             </div>
         </div>
