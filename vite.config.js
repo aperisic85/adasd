@@ -6,9 +6,9 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host:'0.0.0.0',
-    port:8080,
+    port:3001,
     strictPort: true,
-    allowedHosts: ['ina.plovput.hr', 'localhost:3000', '127.0.0.1'] // Ensures the server uses the specified port
+    allowedHosts: ['ina.plovput.hr', 'localhost:3000', '127.0.0.1','localhost:8080'] // Ensures the server uses the specified port
     //allowedHosts:true
   },
   build: {
