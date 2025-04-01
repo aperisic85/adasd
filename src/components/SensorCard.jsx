@@ -5,15 +5,29 @@ import { parseSensorData } from "../utils/dataUtils";
 import { formatGatewayInfo } from "../utils/gatewayUtils";
 import { decodeStatus, decodeAlarm } from "../utils/dataUtils";
 
-const DeviceInfo = ({ sensor }) => (
+const DeviceInfo = ({ sensor }) => {
+  
+  const gateways = formatGatewayInfo(sensor.gws);
+  return (
   <div className="device-info">
     <h3>Device Info</h3>
     <p><strong>Naziv:</strong> {sensor.EUI === '513F167B004A0024' ? 'Izabela South' : 'Izabela North'}</p>
     <p><strong>EUI:</strong> {sensor.EUI}</p>
     <p><strong>Baterija:</strong> {parseBatteryPercentage(sensor.bat)}</p>
     <p><strong>Posljednji podaci:</strong> {new Date(sensor.received_at).toLocaleString()}</p>
+    <div className="gateway-section">
+      <h5>Gateways ({gateways.length})</h5>
+      <div className="compact-gateways">
+        {gateways.map((gw, index) => (
+      <div key={index} className="gateway-compact">
+        <p><strong>RSSI:</strong> {gw.rssi} dBm</p>
+        <p><strong>SNR:</strong> {gw.snr}</p>
+      </div>
+    ))}
   </div>
-);
+</div>
+  </div>
+);}
 /* // Helper for battery status text
 const getBatteryStatusText = (statusCode) => {
   switch(statusCode) {
@@ -22,7 +36,26 @@ const getBatteryStatusText = (statusCode) => {
     case 2: return "Low";
     default: return "Unknown";
   }
-}; */
+}; 
+
+
+<div className="gateway-section">
+<h4>Gateways ({gateways.length})</h4>
+  <div className="compact-gateways">
+    {gateways.map((gw, index) => (
+      <div key={index} className="gateway-compact">
+        <p><strong>RSSI:</strong> {gw.rssi} dBm</p>
+        <p><strong>SNR:</strong> {gw.snr}</p>
+      </div>
+    ))}
+  </div>
+</div>
+
+
+
+
+
+*/
 const DataSection = ({ parsedData }) => {
   // Decode Station A status and alarms
   const stationAStatus = decodeStatus(parsedData.stationA.status);
@@ -37,19 +70,21 @@ const DataSection = ({ parsedData }) => {
         <h5>Pozicija A</h5>
         <div className="station-info">
           <p><strong>Status:</strong></p>
-          <ul>
-            <li>Battery: {stationAStatus.batteryStatus ? "Flat" : "Ok"}</li>
+          <ul className="status-list">
+          <li>Battery:{stationAStatus.batteryStatusFlat ? "Flat" : "Ok"}</li>
             <li>Solar Panel Daylight: {stationAStatus.solarPanelDaylight ? "Yes" : "No"}</li>
+            <li>Modem Power State: {stationAStatus.modemPowerState ? "On" : "Off"}</li>
+            <li>Internet Connection: {stationAStatus.internetConnectionOk ? "Ok" : "Error"}</li>
           </ul>
           
 
           {/* Display Station A alarms */}
           <p><strong>Alarmi:</strong></p>
-          <ul>
+          <ul className="alarm-list">
             {stationAAlarms.tempAlarm && <li>Temperatura {">"} 60°C </li>}
             {stationAAlarms.batteryHigh && <li>Napon baterije {">"} 16 V</li>}
             {stationAAlarms.batteryLow && <li>Napon baterije - nizak </li>}
-            {stationAAlarms.batteryFlat && <li>Voltage {">"} 16V</li>}
+            {stationAAlarms.batteryFlat && <li>Baterija: flat</li>}
             {stationAAlarms.modemNetworkError && <li>Modem network error</li>}
             
           </ul>
@@ -68,17 +103,19 @@ const DataSection = ({ parsedData }) => {
               <div className="station-info">
               <p><strong>Status:</strong></p>
 
-          <ul>
+          <ul className="status-list">
             <li>Battery:{stationStatus.batteryStatusFlat ? "Flat" : "Ok"}</li>
             <li>Solar Panel Daylight: {stationStatus.solarPanelDaylight ? "Yes" : "No"}</li>
             <li>Modem Power State: {stationStatus.modemPowerState ? "On" : "Off"}</li>
             <li>Internet Connection: {stationStatus.internetConnectionOk ? "Ok" : "Error"}</li>
           </ul>
-          <ul>
+          {/* Display other Station  alarms */}
+          <p><strong>Alarmi:</strong></p>
+          <ul className="alarm-list">
             {stationAlarms.tempAlarm && <li>Temperatura {">"} 60°C </li>}
             {stationAlarms.batteryHigh && <li>Napon baterije {">"} 16 V</li>}
             {stationAlarms.batteryLow && <li>Napon baterije - nizak </li>}
-            {stationAlarms.batteryFlat && <li>Voltage {">"} 16V</li>}
+            {stationAlarms.batteryFlat && <li>Baterija: flat </li>}
             {stationAlarms.modemNetworkError && <li>Modem network error</li>}
           </ul>
               </div>
@@ -94,7 +131,7 @@ const DataSection = ({ parsedData }) => {
 
 
 const SensorCard = ({ sensor }) => {
-  const gateways = formatGatewayInfo(sensor.gws);
+ //const gateways = formatGatewayInfo(sensor.gws);
   const parsedData = parseSensorData(sensor.data);
 
   return (
@@ -102,19 +139,7 @@ const SensorCard = ({ sensor }) => {
       {/* Device Info */}
       <DeviceInfo sensor={sensor} />
 
-      {/* Gateway Info */}
-      <div className="gateway-section">
-        <h4>Gateways ({gateways.length})</h4>
-        {/* Compact Gateway Section */}
-        <div className="compact-gateways">
-          {gateways.map((gw, index) => (
-            <div key={index} className="gateway-compact">
-              <p><strong>RSSI:</strong> {gw.rssi} dBm</p>
-              <p><strong>SNR:</strong> {gw.snr}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+      
 
       {/* Data Section */}
       <DataSection parsedData={parsedData} />

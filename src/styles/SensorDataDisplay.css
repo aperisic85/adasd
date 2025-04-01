@@ -33,7 +33,8 @@
 
 /* Compact Gateway Section */
 .gateway-section {
-  padding: 10px; /* Reduce padding */
+  padding: 5px; /* Reduce padding */
+  margin: 1px;
 }
 
 .gateway-section h4 {
@@ -46,13 +47,14 @@
 }
 
 .gateway-compact {
-  background-color: #f9f9f9; /* Light background for contrast */
+  background-color: #ffffff; /* Light background for contrast */
   border-radius: 6px; /* Rounded corners */
-  padding: 8px; /* Compact padding */
+  padding: 2px;
+  font-size: x-small; /* Compact padding */
 }
 
 .gateway-compact p {
-  margin: 3px;
+  margin: 2px;
 }
 
 /* Data Section Styling */
