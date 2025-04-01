@@ -73,10 +73,10 @@ const DataSection = ({ parsedData }) => {
         <div className="station-info">
           <p><strong>Status:</strong></p>
           <ul className="status-list">
-          <li>Battery:{stationAStatus.batteryStatusFlat ? "Flat" : "Ok"}</li>
-            <li>Solar Panel Daylight: {stationAStatus.solarPanelDaylight ? "Yes" : "No"}</li>
-            <li>Modem Power State: {stationAStatus.modemPowerState ? "On" : "Off"}</li>
-            <li>Internet Connection: {stationAStatus.internetConnectionOk ? "Ok" : "Error"}</li>
+          <li><BatteryIcon></BatteryIcon><span>Battery:{stationAStatus.batteryStatusFlat ? "Flat" : "Ok"}</span></li>
+            <li><SolarPanelIcon></SolarPanelIcon><span>Solar Panel Daylight: {stationAStatus.solarPanelDaylight ? "Yes" : "No"}</span></li>
+            <li><ModemIcon></ModemIcon><span>Modem Power State: {stationAStatus.modemPowerState ? "On" : "Off"}</span></li>
+            <li><InternetIcon></InternetIcon><span>Internet Connection: {stationAStatus.internetConnectionOk ? "Ok" : "Error"}</span></li>
           </ul>
           
 
@@ -130,12 +130,12 @@ const DataSection = ({ parsedData }) => {
           <div className="station-info">
           <p><strong>Status:</strong></p>
 
-      <ul className="status-list">
-        <li>Battery:{stationStatus.batteryStatusFlat ? "Flat" : "Ok"}</li>
-        <li>Solar Panel Daylight: {stationStatus.solarPanelDaylight ? "Yes" : "No"}</li>
-        <li>Modem Power State: {stationStatus.modemPowerState ? "On" : "Off"}</li>
-        <li>Internet Connection: {stationStatus.internetConnectionOk ? "Ok" : "Error"}</li>
-      </ul>
+          <ul className="status-list">
+          <li><BatteryIcon></BatteryIcon><span>Battery:{stationStatus.batteryStatusFlat ? "Flat" : "Ok"}</span></li>
+            <li><SolarPanelIcon></SolarPanelIcon><span>Solar Panel Daylight: {stationStatus.solarPanelDaylight ? "Yes" : "No"}</span></li>
+            <li><ModemIcon></ModemIcon><span>Modem Power State: {stationStatus.modemPowerState ? "On" : "Off"}</span></li>
+            <li><InternetIcon></InternetIcon><span>Internet Connection: {stationStatus.internetConnectionOk ? "Ok" : "Error"}</span></li>
+          </ul>
       {/* Display other Station  alarms */}
       <p><strong>Alarmi:</strong></p>
       <ul className="alarm-list">

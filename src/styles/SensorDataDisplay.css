@@ -102,3 +102,19 @@
 .alarm-list li svg {
   margin-right: 8px;
 }
+
+.status-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.status-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.status-list li svg {
+  margin-right: 8px;
+}
+
