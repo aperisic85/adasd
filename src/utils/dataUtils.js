@@ -91,8 +91,10 @@ export function formatGatewayInfo(gateways) {
 // Status Decoder
 export const decodeStatus = (statusValue) => {
   return {
-    batteryStatus: (statusValue & 0x06) >> 1, // Bits 1-2
-    solarPanelDaylight: Boolean(statusValue & 0x08) // Bit 3
+    batteryStatusFlat: Boolean(statusValue & 0x02), // Bit 1
+    solarPanelDaylight: Boolean(statusValue & 0x08), // Bit 3
+    modemPowerState: Boolean(statusValue & 0x10), // Bit 4
+    internetConnectionOk: Boolean(statusValue & 0x20), // Bit 5
   };
 };
 

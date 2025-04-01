@@ -14,7 +14,7 @@ const DeviceInfo = ({ sensor }) => (
     <p><strong>Posljednji podaci:</strong> {new Date(sensor.received_at).toLocaleString()}</p>
   </div>
 );
-// Helper for battery status text
+/* // Helper for battery status text
 const getBatteryStatusText = (statusCode) => {
   switch(statusCode) {
     case 0: return "Normal";
@@ -22,7 +22,7 @@ const getBatteryStatusText = (statusCode) => {
     case 2: return "Low";
     default: return "Unknown";
   }
-};
+}; */
 const DataSection = ({ parsedData }) => {
   // Decode Station A status and alarms
   const stationAStatus = decodeStatus(parsedData.stationA.status);
@@ -38,7 +38,7 @@ const DataSection = ({ parsedData }) => {
         <div className="station-info">
           <p><strong>Status:</strong></p>
           <ul>
-            <li>Battery: {getBatteryStatusText(stationAStatus.batteryStatus)}</li>
+            <li>Battery: {stationAStatus.batteryStatus ? "Flat" : "Ok"}</li>
             <li>Solar Panel Daylight: {stationAStatus.solarPanelDaylight ? "Yes" : "No"}</li>
           </ul>
           
@@ -67,11 +67,13 @@ const DataSection = ({ parsedData }) => {
               <h5>Pozicija {String.fromCharCode(66 + index)}</h5>
               <div className="station-info">
               <p><strong>Status:</strong></p>
+
           <ul>
-            <li>Battery: {getBatteryStatusText(stationStatus.batteryStatus)}</li>
+            <li>Battery:{stationAStatus.batteryStatusFlat ? "Flat" : "Ok"}</li>
             <li>Solar Panel Daylight: {stationStatus.solarPanelDaylight ? "Yes" : "No"}</li>
+            <li>Modem Power State: {stationStatus.modemPowerState ? "On" : "Off"}</li>
+            <li>Internet Connection: {stationStatus.internetConnectionOk ? "Ok" : "Error"}</li>
           </ul>
-              <p><strong>Alarmi:</strong></p>
           <ul>
             {stationAlarms.tempOver60 && <li>Temperature {">"} 60°C</li>}
             {stationAlarms.tempOver70 && <li>Temperature {">"}  70°C</li>}
