@@ -50,10 +50,10 @@ export function parseSensorData(hexString) {
 
   // Parse remaining stations (4 bytes each: status + alarm)
   const stations = [];
-  const stationSize = 4;
+  const stationSizeBytes = 4;
 
-  for (let i = 4; i < dataBytes.length; i += stationSize) {
-    const endIndex = i + stationSize;
+  for (let i = 4; i < dataBytes.length; i += stationSizeBytes) {
+    const endIndex = i + stationSizeBytes;
 
     if (endIndex > dataBytes.length) {
       console.warn(`Incomplete station data at position ${i}`);

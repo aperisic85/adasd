@@ -69,19 +69,17 @@ const DataSection = ({ parsedData }) => {
               <p><strong>Status:</strong></p>
 
           <ul>
-            <li>Battery:{stationAStatus.batteryStatusFlat ? "Flat" : "Ok"}</li>
+            <li>Battery:{stationStatus.batteryStatusFlat ? "Flat" : "Ok"}</li>
             <li>Solar Panel Daylight: {stationStatus.solarPanelDaylight ? "Yes" : "No"}</li>
             <li>Modem Power State: {stationStatus.modemPowerState ? "On" : "Off"}</li>
             <li>Internet Connection: {stationStatus.internetConnectionOk ? "Ok" : "Error"}</li>
           </ul>
           <ul>
-            {stationAlarms.tempOver60 && <li>Temperature {">"} 60°C</li>}
-            {stationAlarms.tempOver70 && <li>Temperature {">"}  70°C</li>}
-            {stationAlarms.tempOver80 && <li>Temperature {">"}  80°C</li>}
-            {stationAlarms.voltageOver16 && <li>Voltage {">"} 16V</li>}
-            {stationAlarms.voltageOver18 && <li>Voltage  {">"} 18V</li>}
-            {stationAlarms.batteryLow && <li>Battery Low</li>}
-            {stationAlarms.batteryFlat && <li>Battery Flat</li>}
+            {stationAlarms.tempAlarm && <li>Temperatura {">"} 60°C </li>}
+            {stationAlarms.batteryHigh && <li>Napon baterije {">"} 16 V</li>}
+            {stationAlarms.batteryLow && <li>Napon baterije - nizak </li>}
+            {stationAlarms.batteryFlat && <li>Voltage {">"} 16V</li>}
+            {stationAlarms.modemNetworkError && <li>Modem network error</li>}
           </ul>
               </div>
             </div>
