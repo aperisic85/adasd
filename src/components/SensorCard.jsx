@@ -4,6 +4,8 @@ import { parseBatteryPercentage } from "../utils/batteryUtils";
 import { parseSensorData } from "../utils/dataUtils";
 import { formatGatewayInfo } from "../utils/gatewayUtils";
 import { decodeStatus, decodeAlarm } from "../utils/dataUtils";
+import { TemperatureIcon, BatteryIcon, NetworkErrorIcon } from "../assets/StatusIcons"; // Adjust the import path as necessary
+import { SolarPanelIcon, ModemIcon, InternetIcon, BatteryLowIcon, BatteryFlatIcon, BatteryNormalIcon, BatteryUnknownIcon } from "../assets/StatusIcons"; // Adjust the import path as necessary
 
 const DeviceInfo = ({ sensor }) => {
   
@@ -81,49 +83,100 @@ const DataSection = ({ parsedData }) => {
           {/* Display Station A alarms */}
           <p><strong>Alarmi:</strong></p>
           <ul className="alarm-list">
-            {stationAAlarms.tempAlarm && <li>Temperatura {">"} 60°C </li>}
-            {stationAAlarms.batteryHigh && <li>Napon baterije {">"} 16 V</li>}
-            {stationAAlarms.batteryLow && <li>Napon baterije - nizak </li>}
-            {stationAAlarms.batteryFlat && <li>Baterija: flat</li>}
-            {stationAAlarms.modemNetworkError && <li>Modem network error</li>}
-            
-          </ul>
+  {stationAAlarms.tempAlarm && (
+    <li>
+      <TemperatureIcon size={16} color="red" />
+      <span>Temperatura {">"} 60°C</span>
+    </li>
+  )}
+  {stationAAlarms.batteryHigh && (
+    <li>
+      <BatteryIcon size={16} color="orange" />
+      <span>Napon baterije {">"} 16 V</span>
+    </li>
+  )}
+  {stationAAlarms.batteryLow && (
+    <li>
+      <BatteryIcon size={16} color="red" />
+      <span>Napon baterije - nizak</span>
+    </li>
+  )}
+  {stationAAlarms.batteryFlat && (
+    <li>
+      <BatteryIcon size={16} color="red" />
+      <span>Voltage {">"} 16V</span>
+    </li>
+  )}
+  {stationAAlarms.modemNetworkError && (
+    <li>
+      <NetworkErrorIcon size={16} color="red" />
+      <span>Modem network error</span>
+    </li>
+  )}
+</ul>
+
         </div>
       </div>
 
       {/* Other Stations */}
-      <div className="stations">
-        {parsedData.stations.map((station, index) => {
-          const stationStatus = decodeStatus(station.status);
-          const stationAlarms = decodeAlarm(station.alarm);
+  <div className="stations">
+    {parsedData.stations.map((station, index) => {
+      const stationStatus = decodeStatus(station.status);
+      const stationAlarms = decodeAlarm(station.alarm);
 
-          return (
-            <div key={index} className="station-card">
-              <h5>Pozicija {String.fromCharCode(66 + index)}</h5>
-              <div className="station-info">
-              <p><strong>Status:</strong></p>
+      return (
+        <div key={index} className="station-card">
+          <h5>Pozicija {String.fromCharCode(66 + index)}</h5>
+          <div className="station-info">
+          <p><strong>Status:</strong></p>
 
-          <ul className="status-list">
-            <li>Battery:{stationStatus.batteryStatusFlat ? "Flat" : "Ok"}</li>
-            <li>Solar Panel Daylight: {stationStatus.solarPanelDaylight ? "Yes" : "No"}</li>
-            <li>Modem Power State: {stationStatus.modemPowerState ? "On" : "Off"}</li>
-            <li>Internet Connection: {stationStatus.internetConnectionOk ? "Ok" : "Error"}</li>
-          </ul>
-          {/* Display other Station  alarms */}
-          <p><strong>Alarmi:</strong></p>
-          <ul className="alarm-list">
-            {stationAlarms.tempAlarm && <li>Temperatura {">"} 60°C </li>}
-            {stationAlarms.batteryHigh && <li>Napon baterije {">"} 16 V</li>}
-            {stationAlarms.batteryLow && <li>Napon baterije - nizak </li>}
-            {stationAlarms.batteryFlat && <li>Baterija: flat </li>}
-            {stationAlarms.modemNetworkError && <li>Modem network error</li>}
-          </ul>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      <ul className="status-list">
+        <li>Battery:{stationStatus.batteryStatusFlat ? "Flat" : "Ok"}</li>
+        <li>Solar Panel Daylight: {stationStatus.solarPanelDaylight ? "Yes" : "No"}</li>
+        <li>Modem Power State: {stationStatus.modemPowerState ? "On" : "Off"}</li>
+        <li>Internet Connection: {stationStatus.internetConnectionOk ? "Ok" : "Error"}</li>
+      </ul>
+      {/* Display other Station  alarms */}
+      <p><strong>Alarmi:</strong></p>
+      <ul className="alarm-list">
+        {stationAlarms.tempAlarm && (
+          <li>
+            <TemperatureIcon size={16} color="red" />
+            <span>Temperatura {">"} 60°C</span>
+          </li>
+          )}
+        {stationAlarms.batteryHigh && (
+          <li>
+            <BatteryIcon size={16} color="orange" />
+            <span>Napon baterije {">"} 16 V</span>
+          </li>
+        ) }
+        {stationAlarms.batteryLow && (
+          <li>
+            <BatteryIcon size={16} color="red" />
+            <span>Napon baterije - nizak</span>
+          </li>
+        )}
+        {stationAlarms.batteryFlat && (
+        <li>
+          <BatteryIcon size={16} color="red" />
+          <span>Voltage {">"} 16V</span>
+        </li>
+        )}
+        {stationAlarms.modemNetworkError && (
+          <li>
+            <NetworkErrorIcon size={16} color="red" />
+            <span>Modem network error</span>
+          </li>
+        )}
+      </ul>
+
     </div>
+      </div>
+    );
+  })}
+</div>
+</div>
   );
 };
 

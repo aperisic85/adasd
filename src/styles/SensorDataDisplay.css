@@ -87,3 +87,18 @@
 .station-info p {
   font-size: smaller; /* Compact text for details */
 }
+
+.alarm-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.alarm-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.alarm-list li svg {
+  margin-right: 8px;
+}
