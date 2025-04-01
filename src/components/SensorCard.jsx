@@ -42,15 +42,16 @@ const DataSection = ({ parsedData }) => {
             <li>Solar Panel Daylight: {stationAStatus.solarPanelDaylight ? "Yes" : "No"}</li>
           </ul>
           
+
+          {/* Display Station A alarms */}
           <p><strong>Alarmi:</strong></p>
           <ul>
-            {stationAAlarms.tempOver60 &&  <li>Temperature {">"} 60°C</li>}
-            {stationAAlarms.tempOver70 && <li>Temperature {">"}  70°C</li>}
-            {stationAAlarms.tempOver80 && <li>Temperature {">"}  80°C</li>}
-            {stationAAlarms.voltageOver16 && <li>Voltage {">"} 16V</li>}
-            {stationAAlarms.voltageOver18 && <li>Voltage  {">"} 18V</li>}
-            {stationAAlarms.batteryLow && <li>Battery Low</li>}
-            {stationAAlarms.batteryFlat && <li>Battery Flat</li>}
+            {stationAAlarms.tempAlarm && <li>Temperatura {">"} 60°C </li>}
+            {stationAAlarms.batteryHigh && <li>Napon baterije {">"} 16 V</li>}
+            {stationAAlarms.batteryLow && <li>Napon baterije - nizak </li>}
+            {stationAAlarms.batteryFlat && <li>Voltage {">"} 16V</li>}
+            {stationAAlarms.modemNetworkError && <li>Modem network error</li>}
+            
           </ul>
         </div>
       </div>

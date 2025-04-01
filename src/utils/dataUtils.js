@@ -99,12 +99,12 @@ export const decodeStatus = (statusValue) => {
 // Alarm Decoder
 export const decodeAlarm = (alarmValue) => {
   return {
-    tempOver60: Boolean(alarmValue & 0x02),  // Bit 1
-    tempOver70: Boolean(alarmValue & 0x04),  // Bit 2
-    tempOver80: Boolean(alarmValue & 0x08),  // Bit 3
-    voltageOver16: Boolean(alarmValue & 0x10), // Bit 4
-    voltageOver18: Boolean(alarmValue & 0x20), // Bit 5
-    batteryLow: Boolean(alarmValue & 0x40),   // Bit 6
-    batteryFlat: Boolean(alarmValue & 0x80)   // Bit 7
+    tempAlarm: Boolean(alarmValue & 0x02),  // Bit 1
+    batteryHigh: Boolean(alarmValue & 0x04),  // Bit 2
+    batteryLow: Boolean(alarmValue & 0x08),  // Bit 3
+    batteryFlat: Boolean(alarmValue & 0x10), // Bit 4
+    modemNetworkError: Boolean(alarmValue & 0x20), // Bit 5
+    unused1: Boolean(alarmValue & 0x40),   // Bit 6
+    unused2: Boolean(alarmValue & 0x80)   // Bit 7
   };
 };
