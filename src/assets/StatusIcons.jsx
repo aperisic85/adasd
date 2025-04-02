@@ -15,6 +15,11 @@ export  const BatteryIcon = ({ size = 18, color = "currentColor" }) => (
       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
     </svg>
   );
+  export const NetworkIcon = ({ size = 18, color = "currentColor" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={size} height={size} fill={color}>
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+    </svg>
+  );
   export   const SolarPanelIcon = ({ size = 18, color = "currentColor" }) => (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={size} height={size} fill={color}>
         <path d="M4 4h16v12H4V4zm2 2v8h12V6H6zm0 10h12v2H6v-2z"/>

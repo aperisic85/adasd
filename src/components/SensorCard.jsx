@@ -1,11 +1,11 @@
 import React from "react";
 import "../styles/SensorDataDisplay.css";
 import { parseBatteryPercentage } from "../utils/batteryUtils";
-import { parseSensorData, bytesToUInt16BE } from "../utils/dataUtils";
+import { parseSensorData, bytesToUInt16BE, bytesToBits } from "../utils/dataUtils";
 import { formatGatewayInfo } from "../utils/gatewayUtils";
-import { decodeStatus, decodeAlarm } from "../utils/dataUtils";
 import { TemperatureIcon, BatteryIcon, NetworkErrorIcon } from "../assets/StatusIcons";
-import { SolarPanelIcon, ModemIcon, InternetIcon, BatteryLowIcon, BatteryFlatIcon, BatteryNormalIcon, BatteryUnknownIcon } from "../assets/StatusIcons";
+import { SolarPanelIcon, ModemIcon, InternetIcon, BatteryLowIcon, BatteryFlatIcon, BatteryNormalIcon, BatteryUnknownIcon, NetworkIcon } from "../assets/StatusIcons";
+import { decodeBatteryState } from "../utils/batteryUtils";
 
 const DeviceInfo = ({ sensor }) => {
   const gateways = formatGatewayInfo(sensor.gws);
@@ -31,104 +31,97 @@ const DeviceInfo = ({ sensor }) => {
   );
 };
 
-const DataSection = ({ parsedData }) => {
-  // Get all stations including the first one
-  const stations = parsedData.stations;
-
+const BatteryStatus = ({ statusCode }) => {
+  const status = decodeBatteryState(statusCode);
+  
   return (
-    <div className="data-section">
-      <h4>Podaci</h4>
-      
-      {/* All Stations */}
-      <div className="stations">
-        {stations.map((station, index) => {
-          const stationStatus = decodeStatus(station.status);
-          const stationAlarms = decodeAlarm(station.alarm);
-
-          return (
-            <div key={index} className="station-card">
-              <h5>Pozicija {String.fromCharCode(65 + index)}</h5>
-              <div className="station-info">
-                <p><strong>Status:</strong></p>
-                <ul className="status-list">
-                  <li>
-                    <BatteryIcon />
-                    <span>Baterija: {
-                      stationStatus.Battery_status === 0 ? 'Nepoznat' :
-                      stationStatus.Battery_status === 1 ? 'Flat' :
-                      stationStatus.Battery_status === 2 ? 'Punjenje' :
-                      'Pun'
-                    }</span>
-                  </li>
-                  <li>
-                    <SolarPanelIcon />
-                    <span>Solarni panel: {stationStatus.Solar_panel_day_light ? 'Dan' : 'Noć'}</span>
-                  </li>
-                  <li>
-                    <ModemIcon />
-                    <span>Modem: {stationStatus.Modem_power_state ? 'Uključen' : 'Isključen'}</span>
-                  </li>
-                  <li>
-                    <InternetIcon />
-                    <span>Internet: {stationStatus.Internet_connection_ok ? 'OK' : 'Greška'}</span>
-                  </li>
-                </ul>
-
-                <p><strong>Alarmi:</strong></p>
-                <ul className="alarm-list">
-                  {stationAlarms.Alarm_datalogger_high_temp && (
-                    <li>
-                      <TemperatureIcon size={16} color="red" />
-                      <span>Visoka temperatura dataloggera</span>
-                    </li>
-                  )}
-                  {stationAlarms.Alarm_datalogger_high_voltage && (
-                    <li>
-                      <BatteryIcon size={16} color="orange" />
-                      <span>Visoki napon ({">"} 16V)</span>
-                    </li>
-                  )}
-                  {stationAlarms.Alarm_battery_voltage_low && (
-                    <li>
-                      <BatteryIcon size={16} color="red" />
-                      <span>Nizak napon baterije</span>
-                    </li>
-                  )}
-                  {stationAlarms.Alarm_battery_voltage_flat && (
-                    <li>
-                      <BatteryIcon size={16} color="red" />
-                      <span>Baterija ispražnjena</span>
-                    </li>
-                  )}
-                  {stationAlarms.Alarm_modem_network_error && (
-                    <li>
-                      <NetworkErrorIcon size={16} color="red" />
-                      <span>Greška mreže modema</span>
-                    </li>
-                  )}
-                  {stationAlarms.Alarm_lantern_communication_failed && (
-                    <li>
-                      <NetworkErrorIcon size={16} color="red" />
-                      <span>Greška komunikacije svjetionika</span>
-                    </li>
-                  )}
-                </ul>
-              </div>
-            </div>
-          );
-        })}
+    <div className={`battery-status ${status.color}`}>
+      <span className="icon">{status.icon}</span>
+      <div className="status-info">
+        <h4>{status.state}</h4>
+        <p>{status.description}</p>
       </div>
     </div>
   );
 };
 
+const DataSection = ({ parsedData }) => {
+  return (
+    <div className="data-section">
+      <h4>Podaci</h4>
+      <div className="stations">
+        {parsedData.stations.map((station, index) => (
+          <div key={index} className="station-card">
+            <h5>Pozicija {String.fromCharCode(65 + index)}</h5>
+            
+            {/* Status 1 */}
+            <div className="status-group">
+              <h6>Status 1:</h6>
+              <ul className="status-list">
+                <li><BatteryStatus></BatteryStatus></li>
+                <li><SolarPanelIcon /> Solar: {station.status1.Solar_panel_day_light ? 'Dan' : 'Noć'}</li>
+                <li><ModemIcon /> Modem: {station.status1.Modem_power_state ? 'On' : 'Off'}</li>
+              </ul>
+            </div>
+
+            {/* Status 2 */}
+            <div className="status-group">
+              <h6>Status 2:</h6>
+              <ul className="status-list">
+                <li><InternetIcon /> Internet: {station.status2.Internet_connection_ok ? 'OK' : 'Greška'}</li>
+                <li><NetworkIcon /> Lantern Comms: {station.status2.Lantern_communication_ok ? 'OK' : 'Error'}</li>
+              </ul>
+            </div>
+
+            {/* Alarms */}
+            <div className="alarms">
+              <h6>Alarmi:</h6>
+              <ul className="alarm-list">
+                {station.alarm1.Alarm_datalogger_high_temp && <li>High Temp</li>}
+                {station.alarm1.Alarm_battery_voltage_low && <li>Low Battery</li>}
+                {station.alarm2.Alarm_modem_network_error && <li>Modem Error</li>}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+
 const SensorCard = ({ sensor }) => {
   const parsedData = parseSensorData(sensor.data);
-
+  const bitRepresentation = bytesToBits(parsedData.rawBytes);
+/*   console.log('Raw bytes as bits:');
+    bitRepresentation.forEach((bits, index) =>  {
+  console.log(`Byte ${index}: ${bytesToBits(bits)}`);
+  }); */
   return (
     <div className="sensor-card">
       <DeviceInfo sensor={sensor} />
       <DataSection parsedData={parsedData} />
+      <div className="raw-data">
+  
+
+
+<div className="byte-debug">
+  <h4>Raw Byte Visualization mode :) :/</h4>
+  <div className="bit-grid">
+    {bitRepresentation.map((bits, index) => (
+      <div key={index} className="byte-row">
+        <span className="byte-index">Byte {index}:</span>
+        {bits.split('').map((bit, bitIndex) => ( // Ensure bits is a string before calling split()
+          <span key={bitIndex} className={`bit ${bit === '1' ? 'active' : ''}`}>
+            {bit}
+          </span>
+        ))}
+      </div>
+    ))}
+  </div>
+</div>
+      </div>
+      
     </div>
   );
 };

@@ -118,3 +118,36 @@
   margin-right: 8px;
 }
 
+.raw-data {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between raw data items */
+  color: green;
+  background-color: #181616;
+}
+.raw-data-item {
+  background-color: #181616; /* Light background for raw data */
+  border-radius: 6px; /* Rounded corners */
+  padding: 10px; /* Padding for raw data items */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.bit-grid {
+  font-family: monospace;
+}
+
+.byte-row {
+  margin: 5px 0;
+}
+
+.bit {
+  display: inline-block;
+  width: 20px;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+
+.bit.active {
+  background: #90EE90;
+  font-weight: bold;
+}
