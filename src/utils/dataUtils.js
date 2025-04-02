@@ -22,7 +22,7 @@ export function hexStringToBytes(hexString) {
   return bytes;
 }
 
-export function parseSensorData(hexString) {
+/* export function parseSensorData(hexString) {
   // Validate minimum length (1 station label byte + 4 bytes for Station A)
   if (!hexString || hexString.length < 10) { // 5 bytes = 10 hex characters
     throw new Error('Invalid sensor data: minimum 5 bytes (10 hex characters) required');
@@ -87,9 +87,9 @@ export function formatGatewayInfo(gateways) {
     snr: gateway.snr || "N/A",
   }));
 }
-
+ */
 // Status Decoder
-export const decodeStatus = (statusValue) => {
+/* export const decodeStatus = (statusValue) => {
   return {
     batteryStatusFlat: Boolean(statusValue & 0x01), // Bit 1
     solarPanelDaylight: Boolean(statusValue & 0x04), // Bit 3
@@ -110,3 +110,74 @@ export const decodeAlarm = (alarmValue) => {
     unused2: Boolean(alarmValue & 0x40)   // Bit 7
   };
 };
+ */
+
+
+export function parseSensorData(hexString) {
+  // Validate minimum length: 1 byte label + at least 4 bytes for one station
+  if (!hexString || hexString.length < 10) { // 5 bytes = 10 hex characters
+    throw new Error('Invalid sensor data: minimum 5 bytes (10 hex characters) required');
+  }
+
+  const bytes = hexStringToBytes(hexString);
+  const stationLabel = String.fromCharCode(bytes[0]); // First byte is label
+  const dataBytes = bytes.slice(1); // Remaining bytes are station data
+
+  // Validate data length matches 4-byte station chunks
+  if (dataBytes.length % 4 !== 0) {
+    throw new Error(`Invalid data length: ${dataBytes.length} bytes (must be multiple of 4)`);
+  }
+
+  const stations = [];
+  
+  // Parse stations in 4-byte chunks (2 bytes status + 2 bytes alarm)
+  for (let i = 0; i < dataBytes.length; i += 4) {
+    const statusBytes = dataBytes.slice(i, i + 2);
+    const alarmBytes = dataBytes.slice(i + 2, i + 4);
+    
+    stations.push({
+      status: decodeStatus(bytesToUInt16BE(statusBytes)),
+      alarm: decodeAlarm(bytesToUInt16BE(alarmBytes))
+    });
+  }
+
+  return { stationLabel, stations, rawBytes: bytes };
+}
+
+// Status decoder for 2-byte values
+export const decodeStatus = (statusValue) => ({
+  code: statusValue,
+  Battery_status: (statusValue >> 1) & 0x03,       // Bits 1-2
+  Solar_panel_day_light: !!(statusValue & 0x08),   // Bit 3
+  Modem_power_state: !!(statusValue & 0x10),       // Bit 4
+  Internet_connection_ok: !!(statusValue & 0x20),  // Bit 5
+  Lantern_communication_ok: !!(statusValue & 0x40),// Bit 6
+  Lantern_light_active: !!(statusValue & 0x80),    // Bit 7
+  // 16-bit fields
+  Lantern_current_active: !!(statusValue & 0x100),      // Bit 8
+  Visibility_communication_ok: !!(statusValue & 0x200), // Bit 9
+  Visibility_alarm: !!(statusValue & 0x400),            // Bit 10
+  Fog_signal_current_active: !!(statusValue & 0x800)    // Bit 11
+});
+
+// Alarm decoder for 2-byte values
+export const decodeAlarm = (alarmValue) => ({
+  code: alarmValue,
+  Alarm_datalogger_high_temp: !!(alarmValue & 0x02),        // Bit 1
+  Alarm_datalogger_high_voltage: !!(alarmValue & 0x04),     // Bit 2
+  Alarm_battery_voltage_low: !!(alarmValue & 0x08),         // Bit 3
+  Alarm_battery_voltage_flat: !!(alarmValue & 0x10),        // Bit 4
+  Alarm_modem_network_error: !!(alarmValue & 0x20),         // Bit 5
+  // 16-bit fields  
+  Alarm_lantern_communication_failed: !!(alarmValue & 0x40),   // Bit 6
+  Alarm_lantern_night_light_off: !!(alarmValue & 0x80),        // Bit 7
+  Alarm_lantern_day_light_on: !!(alarmValue & 0x100),          // Bit 8
+  Alarm_visibility_communication_failed: !!(alarmValue & 0x200), // Bit 9
+  Alarm_visibility_error: !!(alarmValue & 0x400),              // Bit 10
+  Alarm_fog_signal_off_during_fog: !!(alarmValue & 0x800),     // Bit 11
+  Alarm_fog_signal_on_while_no_fog: !!(alarmValue & 0x1000)    // Bit 12
+});
+
+// Helper function for big-endian byte conversion
+export const bytesToUInt16BE = (byteArray) => 
+  (byteArray[0] << 8) | byteArray[1];
