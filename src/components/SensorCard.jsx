@@ -59,17 +59,17 @@ const DataSection = ({ parsedData }) => {
               <h6>Status 1:</h6>
               <ul className="status-list">
                 <li><BatteryStatus></BatteryStatus></li>
-                <li><SolarPanelIcon /> Solar: {station.status1.Solar_panel_day_light ? 'Dan' : 'Noć'}</li>
-                <li><ModemIcon /> Modem: {station.status1.Modem_power_state ? 'On' : 'Off'}</li>
+                <li><SolarPanelIcon /> Solar: {station.status.Solar_panel_day_light ? 'Dan' : 'Noć'}</li>
+                <li><ModemIcon /> Modem: {station.status.Modem_power_state ? 'On' : 'Off'}</li>
               </ul>
             </div>
 
             {/* Status 2 */}
             <div className="status-group">
-              <h6>Status 2:</h6>
+              <h6>Status:</h6>
               <ul className="status-list">
-                <li><InternetIcon /> Internet: {station.status2.Internet_connection_ok ? 'OK' : 'Greška'}</li>
-                <li><NetworkIcon /> Lantern Comms: {station.status2.Lantern_communication_ok ? 'OK' : 'Error'}</li>
+                <li><InternetIcon /> Internet: {station.status.Internet_connection_ok ? 'OK' : 'Greška'}</li>
+                <li><NetworkIcon /> Lantern Comms: {station.status.Lantern_communication_ok ? 'OK' : 'Error'}</li>
               </ul>
             </div>
 
@@ -77,9 +77,17 @@ const DataSection = ({ parsedData }) => {
             <div className="alarms">
               <h6>Alarmi:</h6>
               <ul className="alarm-list">
-                {station.alarm1.Alarm_datalogger_high_temp && <li>High Temp</li>}
-                {station.alarm1.Alarm_battery_voltage_low && <li>Low Battery</li>}
-                {station.alarm2.Alarm_modem_network_error && <li>Modem Error</li>}
+                {station.alarm.Alarm_datalogger_high_temp && <li>High Temp</li>}
+                {station.alarm.Alarm_battery_voltage_low && <li>Low Battery</li>}
+                {station.alarm.Alarm_modem_network_error && <li>Modem Error</li>}
+                {station.alarm.Alarm_battery_voltage_flat && <li>Batterija flat</li>}
+                {station.alarm.Alarm_lantern_communication_failed && <li>Svjetlo: Greška komunikacije</li>}
+                {station.alarm.Alarm_lantern_night_light_off && <li>Svjetlo: Ne radi po noći</li>} 
+                {station.alarm.Alarm_lantern_night_light_off && <li>Svjetlo: Radi po danu</li>} 
+                {station.alarm.Alarm_visibility_communication_failed && <li>Vaisala: greška komunikacije</li>} 
+                {station.alarm.Alarm_visibility_error && <li>Vaisala: greška!</li>} 
+                {station.alarm.Alarm_fog_signal_off_during_fog && <li>FOG: ne radi tijekom magle!</li>} 
+                {station.alarm.Alarm_fog_signal_on_while_no_fog && <li>FOG: radi,a nema magle!</li>} 
               </ul>
             </div>
           </div>
@@ -106,7 +114,7 @@ const SensorCard = ({ sensor }) => {
 
 
 <div className="byte-debug">
-  <h4>Raw Byte Visualization :) :/</h4>
+  <h4>bits in bytes vizualizacija bitova  :/</h4>
   <div className="bit-grid">
     {bitRepresentation.map((bits, index) => (
       <div key={index} className="byte-row">
