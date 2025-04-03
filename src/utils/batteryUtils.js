@@ -13,10 +13,10 @@ export const decodeBatteryState = (statusBits) => {
   switch(maskedValue) {
     case 0b00:  // Binary 00
       return {
-        state: 'Unknown',
-        description: 'No valid status available',
-        color: 'gray',
-        icon: '❓'
+        state: 'OK',
+        description: 'Baterija je uredu',
+        color: 'green',
+        icon: '✔️'
       };
       
     case 0b01:  // Binary 01
@@ -24,7 +24,7 @@ export const decodeBatteryState = (statusBits) => {
         state: 'Good',
         description: 'Battery within normal parameters',
         color: 'green',
-        icon: '✔️'
+        icon: '❓'
       };
       
     case 0b10:  // Binary 10
@@ -54,5 +54,5 @@ export const decodeBatteryState = (statusBits) => {
 };
 
 // Usage Example
-const batteryStatus = decodeBatteryState(0b01); 
+
 // Returns { state: 'Good', ... }

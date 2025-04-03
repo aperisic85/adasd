@@ -37,9 +37,8 @@ const BatteryStatus = ({ statusCode }) => {
   return (
     <div className={`battery-status ${status.color}`}>
       <span className="icon">{status.icon}</span>
-      <div className="status-info">
-        <h4>{status.state}</h4>
-        <p>{status.description}</p>
+      <div className="battery-status-info">
+        <p>Baterija: {status.state}</p>
       </div>
     </div>
   );
@@ -58,7 +57,7 @@ const DataSection = ({ parsedData }) => {
             <div className="status-group">
               <h6>Status 1:</h6>
               <ul className="status-list">
-                <li><BatteryStatus></BatteryStatus></li>
+                <li><BatteryStatus>Baterija:</BatteryStatus></li>
                 <li><SolarPanelIcon /> Solar: {station.status.Solar_panel_day_light ? 'Dan' : 'Noć'}</li>
                 <li><ModemIcon /> Modem: {station.status.Modem_power_state ? 'On' : 'Off'}</li>
               </ul>
@@ -77,7 +76,7 @@ const DataSection = ({ parsedData }) => {
             <div className="alarms">
               <h6>Alarmi:</h6>
               <ul className="alarm-list">
-                {station.alarm.Alarm_datalogger_high_temp && <li>High Temp</li>}
+                {station.alarm.Alarm_datalogger_high_temp && <li>Datalogger: High Temp</li>}
                 {station.alarm.Alarm_battery_voltage_low && <li>Low Battery</li>}
                 {station.alarm.Alarm_modem_network_error && <li>Modem Error</li>}
                 {station.alarm.Alarm_battery_voltage_flat && <li>Batterija flat</li>}
