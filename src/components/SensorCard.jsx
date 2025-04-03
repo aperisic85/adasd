@@ -106,11 +106,11 @@ const SensorCard = ({ sensor }) => {
 
 
 <div className="byte-debug">
-  <h4>Raw Byte Visualization mode :) :/</h4>
+  <h4>Raw Byte Visualization :) :/</h4>
   <div className="bit-grid">
     {bitRepresentation.map((bits, index) => (
       <div key={index} className="byte-row">
-        <span className="byte-index">Byte {index}:</span>
+        <span className="byte-index">Byte {index < 10 ? `0${index}` : index}: </span> 
         {bits.split('').map((bit, bitIndex) => ( // Ensure bits is a string before calling split()
           <span key={bitIndex} className={`bit ${bit === '1' ? 'active' : ''}`}>
             {bit}

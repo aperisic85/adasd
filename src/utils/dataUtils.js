@@ -9,16 +9,18 @@ export function hexStringToBytes(hexString) {
       ? `0${hexString}` 
       : hexString;
   
+    // Create a Uint8Array to hold the bytes
     const bytes = new Uint8Array(normalizedHex.length / 2);
-    
-    for (let i = 0; i < normalizedHex.length; i += 2) {
-      const byteValue = parseInt(normalizedHex.substr(i, 2), 16);
+  
+    // Iterate over the string in steps of 2 characters
+    for (let i = 0; i < hexString.length; i += 2) {
+      const byteValue = parseInt(hexString.slice(i, i + 2), 16); // Use slice instead of substr
       if (isNaN(byteValue)) {
         throw new Error(`Invalid hex byte at position ${i}`);
       }
-      bytes[i/2] = byteValue;
+      bytes[i / 2] = byteValue;
     }
-    
+  
     return bytes;
   }
   export const bytesToUInt16LE = (byteArray) => 

@@ -10,7 +10,7 @@ export default class ErrorBoundary extends React.Component {
 
   render() {
     if (this.state.hasError) {
-      return <div className="error">Failed to render gateways</div>;
+      return <div className="error">Failed to render data</div>;
     }
     return this.props.children;
   }
