@@ -3,7 +3,7 @@ import "../styles/SensorDataDisplay.css";
 import { parseBatteryPercentage } from "../utils/batteryUtils";
 import { parseSensorData, bytesToBits } from "../utils/dataUtils";
 import { formatGatewayInfo } from "../utils/gatewayUtils";
-import { TemperatureIcon, BatteryIcon, NetworkErrorIcon } from "../assets/StatusIcons";
+import { TemperatureIcon, BatteryIcon, NetworkErrorIcon, Sun, Moon } from "../assets/StatusIcons";
 import { SolarPanelIcon, ModemIcon, InternetIcon, BatteryLowIcon, BatteryFlatIcon, BatteryNormalIcon, BatteryUnknownIcon, NetworkIcon } from "../assets/StatusIcons";
 import { decodeBatteryState } from "../utils/batteryUtils";
 
@@ -58,7 +58,7 @@ const DataSection = ({ parsedData }) => {
               <h6>Status 1:</h6>
               <ul className="status-list">
                 <li><BatteryStatus>Baterija:</BatteryStatus></li>
-                <li><SolarPanelIcon /> Solar: {station.status.Solar_panel_day_light ? 'Dan' : 'Noć'}</li>
+                <li> Period dana: {station.status.Solar_panel_day_light ? <Sun /> : <Moon/>}</li>
                 <li><ModemIcon /> Modem: {station.status.Modem_power_state ? 'On' : 'Off'}</li>
               </ul>
             </div>

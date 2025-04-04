@@ -58,53 +58,12 @@ export function hexStringToBytes(hexString) {
     return { stationLabel, stations, rawBytes: bytes };
   }
   
-  // 8-bit Status Decoder
-  export const decodeStatus8Bit = (statusValue) => ({
-    code: statusValue,
-    // Battery status: bits 0-1 (0b00000011)
-    Battery_status: statusValue & 0x03,
-    // Solar panel: bit 3 (0b00001000)
-    Solar_panel_day_light: !!(statusValue & 0x08),
-    // Modem power: bit 4 (0b00010000)
-    Modem_power_state: !!(statusValue & 0x10),
-    // Internet connection: bit 5 (0b00100000)
-    Internet_connection_ok: !!(statusValue & 0x20),
-    // Lantern comms: bit 6 (0b01000000)
-    Lantern_communication_ok: !!(statusValue & 0x40),
-    // Lantern light: bit 7 (0b10000000)
-    Lantern_light_active: !!(statusValue & 0x80)
-  });
-    // 8-bit Status Decoder
-    export const decodeStatusSecond8Bit = (statusValue) => ({
-        code: statusValue,
-        Lantern_current_active: !!(statusValue & 0x01), // Bit 8
-        Visibility_communication_ok: !!(statusValue & 0x02), // Bit 9
-        Visibility_alarm: !!(statusValue & 0x04)  
-      });
-// 8-bit Alarm Decoder
-export const decodeAlarm8Bit = (alarmValue) => ({
-    code: alarmValue,
-    // High temp: bit 1 (0b00000010)
-    Alarm_datalogger_high_temp: !!(alarmValue & 0x02),
-    // High voltage: bit 2 (0b00000100)
-    Alarm_datalogger_high_voltage: !!(alarmValue & 0x04),
-    // Low battery: bit 3 (0b00001000)
-    Alarm_battery_voltage_low: !!(alarmValue & 0x08),
-    // Flat battery: bit 4 (0b00010000)
-    Alarm_battery_voltage_flat: !!(alarmValue & 0x10),
-    // Modem error: bit 5 (0b00100000)
-    Alarm_modem_network_error: !!(alarmValue & 0x20),
-    // Lantern comm failed: bit 6 (0b01000000)
-    Alarm_lantern_communication_failed: !!(alarmValue & 0x40),
-    // Lantern night light: bit 7 (0b10000000)
-    Alarm_lantern_night_light_off: !!(alarmValue & 0x80)
-  });
-
+  
 
   // Status decoder for 16-bit values
   export const decodeStatus = (statusValue) => ({
     code: statusValue,
-    Battery_status: (statusValue >> 1) & ((1<<1) + ((1<<2)*2)),       // Bits 1-2
+    Battery_status: statusValue & 0b00000000_00000011,       // Bits 1-2
     Solar_panel_day_light: !!(statusValue & (1<<2)), // Bit 3
     Modem_power_state: !!(statusValue & (1<<3)),     // Bit 4
     Internet_connection_ok: !!(statusValue & (1 << 4)),// Bit 5
@@ -113,23 +72,23 @@ export const decodeAlarm8Bit = (alarmValue) => ({
     Lantern_current_active: !!(statusValue & (1<<7)), // Bit 8
     Visibility_communication_ok: !!(statusValue & (1<<8)), // Bit 9
     Visibility_alarm: !!(statusValue & (1<<9)),       // Bit 10
-    FogCurrentACtive: !!(statusValue & (1<<10)), // Bit 11
+    FogCurrentActive: !!(statusValue & (1<<10)), // Bit 11
   });
   // Alarm decoder for 16-bit values
   export const decodeAlarm = (alarmValue) => ({
     code: alarmValue,
-    Alarm_datalogger_high_temp: !!(alarmValue & (1<<1)),    // Bit 1
-    Alarm_datalogger_high_voltage: !!(alarmValue & (1<<2)), // Bit 2
-    Alarm_battery_voltage_low: !!(alarmValue & (1<<3)),     // Bit 3
-    Alarm_battery_voltage_flat: !!(alarmValue & (1<<4)),    // Bit 4
-    Alarm_modem_network_error: !!(alarmValue & (1<<5)),     // Bit 5
-    Alarm_lantern_communication_failed: !!(alarmValue & (1<<6)), // Bit 6
-    Alarm_lantern_night_light_off: !!(alarmValue & (1<<7)),      // Bit 7
-    Alarm_lantern_day_light_on: !!(alarmValue & (1<<8)),         // Bit 8
-    Alarm_visibility_communication_failed: !!(alarmValue & (1<<9)), // Bit 9
-    Alarm_visibility_error: !!(alarmValue & (1<<10)),              // Bit 10
-    Alarm_fog_signal_off_during_fog: !!(alarmValue & (1<<11)),     // Bit 11
-    Alarm_fog_signal_on_while_no_fog: !!(alarmValue & (1<<12))     // Bit 12
+    Alarm_datalogger_high_temp: !!(alarmValue  & 0b00000000_00000001),    // Bit 1
+    Alarm_datalogger_high_voltage: !!(alarmValue & (1<<1)), // Bit 2
+    Alarm_battery_voltage_low: !!(alarmValue & (1<<2)),     // Bit 3
+    Alarm_battery_voltage_flat: !!(alarmValue & (1<<3)),    // Bit 4
+    Alarm_modem_network_error: !!(alarmValue & (1<<4)),     // Bit 5
+    Alarm_lantern_communication_failed: !!(alarmValue & (1<<5)), // Bit 6
+    Alarm_lantern_night_light_off: !!(alarmValue & (1<<6)),      // Bit 7
+    Alarm_lantern_day_light_on: !!(alarmValue & (1<<7)),         // Bit 8
+    Alarm_visibility_communication_failed: !!(alarmValue & (1<<8)), // Bit 9
+    Alarm_visibility_error: !!(alarmValue & (1<<9)),              // Bit 10
+    Alarm_fog_signal_off_during_fog: !!(alarmValue & (1<<10)),     // Bit 11
+    Alarm_fog_signal_on_while_no_fog: !!(alarmValue & (1<<11))     // Bit 12
   });
   // Helper function for big-endian byte conversion
   export const bytesToUInt16BE = (byteArray) => 
