@@ -99,7 +99,7 @@ const DataSection = ({ parsedData }) => {
 
 const SensorCard = ({ sensor }) => {
   const parsedData = parseSensorData(sensor.data);
-  const bitRepresentation = bytesToBits(parsedData.rawBytes);
+  //const bitRepresentation = bytesToBits(parsedData.rawBytes);
 /*   console.log('Raw bytes as bits:');
     bitRepresentation.forEach((bits, index) =>  {
   console.log(`Byte ${index}: ${bytesToBits(bits)}`);
@@ -112,7 +112,7 @@ const SensorCard = ({ sensor }) => {
   
 
 
-<div className="byte-debug">
+{/* <div className="byte-debug">
   <h4>bits in bytes vizualizacija bitova  :/</h4>
   <div className="bit-grid">
     {bitRepresentation.map((bits, index) => (
@@ -126,7 +126,7 @@ const SensorCard = ({ sensor }) => {
       </div>
     ))}
   </div>
-</div>
+</div> */}
       </div>
       
     </div>
