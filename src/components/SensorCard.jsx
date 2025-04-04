@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/SensorDataDisplay.css";
 import { parseBatteryPercentage } from "../utils/batteryUtils";
-import { parseSensorData, bytesToUInt16BE, bytesToBits } from "../utils/dataUtils";
+import { parseSensorData, bytesToBits } from "../utils/dataUtils";
 import { formatGatewayInfo } from "../utils/gatewayUtils";
 import { TemperatureIcon, BatteryIcon, NetworkErrorIcon } from "../assets/StatusIcons";
 import { SolarPanelIcon, ModemIcon, InternetIcon, BatteryLowIcon, BatteryFlatIcon, BatteryNormalIcon, BatteryUnknownIcon, NetworkIcon } from "../assets/StatusIcons";

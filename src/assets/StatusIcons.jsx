@@ -55,3 +55,28 @@ export  const BatteryIcon = ({ size = 18, color = "currentColor" }) => (
         <path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4zM13 18h-2v-2h2v2zm0-4h-2V9h2v5z"/>
         </svg>
     );
+
+    export const Moon = ({ size = 18, color = "yellow", back = "darkblue" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={size} height={size}>
+          {/* Dark blue background */}
+          <rect width="100%" height="100%" fill={back} />
+          
+          {/* Banana-shaped crescent moon */}
+          <path 
+              d="M12 2c-5.52 0-10 4.48-10 10s4.48 10 10 10c2.75 0 5.23-1.12 7-2.93-.97.26-1.99.43-3 .43-4.41 0-8-3.59-8-8 0-1.01.17-2.03.43-3C13.12 3.23 12 2 12 2z"
+              fill={color}
+          />
+      </svg>
+  );
+  export const Sun = ({ size = 18, color = "yellow", back = "blue" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={size} height={size}>
+        {/* Blue sky background */}
+        <rect width="100%" height="100%" fill={back} />
+        
+        {/* Sun */}
+        <path 
+            d="M12 4V2h-2v2h2zm0 16v2h-2v-2h2zm8.49-1.51l1.42 1.42 1.41-1.41-1.42-1.42-1.41 1.41zM4.51 18.49l-1.41 1.41 1.42 1.42 1.41-1.42-1.41-1.41zM20 12h2v-2h-2v2zm-16 0H2v-2h2v2zm14.95-6.95l1.42-1.42L20 4l-1.42 1.42L18 5l-.05-.05zM5 18l-.05-.05L4 20l1.42-1.42L5 18zM12 8a4 4 0 100 8 4 4 0 000-8z"
+            fill={color}
+        />
+    </svg>
+);
