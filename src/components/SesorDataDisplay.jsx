@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SensorCard from "./SensorCard";
 import "../styles/SensorDataDisplay.css";
+import ErrorBoundary from "./ErrorBoundary";
 const SensorDataDisplay = () => {
   const [sensorData, setSensorData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -33,14 +34,15 @@ const SensorDataDisplay = () => {
     fetchSensorData();
   }, []);
 
-  if (loading) return <p className="loading">Loading...</p>;
+  if (loading) return <p className="loading">Učitavam podatke...</p>;
   if (error) return <p className="error">{error}</p>;
 
   return (
     <div className="sensor-data-container">
       <h1>INA Platforme</h1>
       {sensorData.map((sensor, index) => (
-        <SensorCard key={index} sensor={sensor} />
+        <ErrorBoundary key={index}>
+        <SensorCard key={index} sensor={sensor} /></ErrorBoundary>
       ))}
     </div>
   );
