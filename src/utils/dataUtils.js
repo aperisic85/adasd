@@ -105,14 +105,15 @@ export const decodeAlarm8Bit = (alarmValue) => ({
   export const decodeStatus = (statusValue) => ({
     code: statusValue,
     Battery_status: (statusValue >> 1) & ((1<<1) + ((1<<2)*2)),       // Bits 1-2
-    Solar_panel_day_light: !!(statusValue & (1<<3)), // Bit 3
-    Modem_power_state: !!(statusValue & (1<<4)),     // Bit 4
-    Internet_connection_ok: !!(statusValue & (1 << 5)),// Bit 5
-    Lantern_communication_ok: !!(statusValue & (1 << 6)), // Bit 6
-    Lantern_light_active: !!(statusValue & (1<<7)),  // Bit 7
-    Lantern_current_active: !!(statusValue & (1<<8)), // Bit 8
-    Visibility_communication_ok: !!(statusValue & (1<<9)), // Bit 9
-    Visibility_alarm: !!(statusValue & (1<<10))       // Bit 10
+    Solar_panel_day_light: !!(statusValue & (1<<2)), // Bit 3
+    Modem_power_state: !!(statusValue & (1<<3)),     // Bit 4
+    Internet_connection_ok: !!(statusValue & (1 << 4)),// Bit 5
+    Lantern_communication_ok: !!(statusValue & (1 << 5)), // Bit 6
+    Lantern_light_active: !!(statusValue & (1<<6)),  // Bit 7
+    Lantern_current_active: !!(statusValue & (1<<7)), // Bit 8
+    Visibility_communication_ok: !!(statusValue & (1<<8)), // Bit 9
+    Visibility_alarm: !!(statusValue & (1<<9)),       // Bit 10
+    FogCurrentACtive: !!(statusValue & (1<<10)), // Bit 11
   });
   // Alarm decoder for 16-bit values
   export const decodeAlarm = (alarmValue) => ({
