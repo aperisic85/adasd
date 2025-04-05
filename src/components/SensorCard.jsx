@@ -1,10 +1,10 @@
 import React from "react";
 import "../styles/SensorDataDisplay.css";
 import { parseBatteryPercentage } from "../utils/batteryUtils";
-import { parseSensorData, bytesToBits } from "../utils/dataUtils";
+import { parseSensorData } from "../utils/dataUtils";
 import { formatGatewayInfo } from "../utils/gatewayUtils";
 import { TemperatureIcon, BatteryIcon, NetworkErrorIcon, Sun, Moon } from "../assets/StatusIcons";
-import { SolarPanelIcon, ModemIcon, InternetIcon, BatteryLowIcon, BatteryFlatIcon, BatteryNormalIcon, BatteryUnknownIcon, NetworkIcon } from "../assets/StatusIcons";
+import { SolarPanelIcon, ModemIcon, InternetIcon, BatteryLowIcon, BatteryFlatIcon, BatteryNormalIcon, VisibilityMeterIcon, LEDLightIcon } from "../assets/StatusIcons";
 import { decodeBatteryState } from "../utils/batteryUtils";
 
 const DeviceInfo = ({ sensor }) => {
@@ -47,6 +47,8 @@ const BatteryStatus = ({ statusCode }) => {
 const DataSection = ({ parsedData }) => {
   return (
     <div className="data-section">
+      <h4>Station {parsedData.stationLabel}</h4>
+        
       <h4>Podaci</h4>
       <div className="stations">
         {parsedData.stations.map((station, index) => (
@@ -55,23 +57,18 @@ const DataSection = ({ parsedData }) => {
             
             {/* Status 1 */}
             <div className="status-group">
-              <h6>Status 1:</h6>
+              <h6>Status:</h6>
               <ul className="status-list">
                 <li><BatteryStatus>Baterija:</BatteryStatus></li>
                 <li> Period dana: {station.status.Solar_panel_day_light ? <Sun /> : <Moon/>}</li>
                 <li><ModemIcon /> Modem: {station.status.Modem_power_state ? 'On' : 'Off'}</li>
-              </ul>
-            </div>
-
-            {/* Status 2 */}
-            <div className="status-group">
-              <h6>Status:</h6>
-              <ul className="status-list">
                 <li><InternetIcon /> Internet: {station.status.Internet_connection_ok ? 'OK' : 'Greška'}</li>
-                <li><NetworkIcon /> Lantern Comms: {station.status.Lantern_communication_ok ? 'OK' : 'Error'}</li>
+                <li><LEDLightIcon /> Svjetlo komunikacija: {station.status.Lantern_communication_ok ? 'OK' : 'Error'}</li>
+                <li><VisibilityMeterIcon/> Detektor magle:{station.status.Alarm_visibility_error ? 'Greška' : 'OK'}</li>
               </ul>
             </div>
 
+            
             {/* Alarms */}
             <div className="alarms">
               <h6>Alarmi:</h6>

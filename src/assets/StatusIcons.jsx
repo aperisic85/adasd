@@ -80,3 +80,35 @@ export  const BatteryIcon = ({ size = 18, color = "currentColor" }) => (
         />
     </svg>
 );
+
+export const VisibilityMeterIcon = ({ size = 18, color = "currentColor" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={size} height={size} fill={color}>
+      <path d="M12 4.5C7.5 4.5 3.5 8.5 2 12c1.5 3.5 5.5 7.5 10 7.5s8.5-4 10-7.5c-1.5-3.5-5.5-7.5-10-7.5zm0 13c-3 0-6-2.25-6-6s2.25-6 6-6 6 2.25 6 6-2.25 6-6 6z"/>
+      <circle cx="12" cy="12" r="3"/>
+    </svg>
+);
+export const FogSignalIcon = ({ size = 18, color = "currentColor" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={size} height={size} fill={color}>
+      <path d="M12 4c-4.41 0-8 3.59-8 8s3.59 8 8 8 8-3.59 8-8-3.59-8-8-8zm0 14c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/>
+      <path d="M12 10c-.55 0-1 .45-1 1s.45 1 1 1 .99-.45.99-1-.44-1-.99-1z"/>
+    </svg>
+);
+export const FogSignalOffIcon = ({ size = 18, color = "currentColor" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={size} height={size} fill={color}>
+      <path d="M12 4c-4.41 0-8 3.59-8 8s3.59 8 8 8 8-3.59 8-8-3.59-8-8-8zm0 14c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/>
+      <path d="M12 10c-.55 0-1 .45-1 1s.45 1 1 1 .99-.45.99-1-.44-1-.99-1z"/>
+    </svg>
+);
+export const FogSignalOnIcon = ({ size = 18, color = "currentColor" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={size} height={size} fill={color}>
+      <path d="M12 4c-4.41 0-8 3.59-8 8s3.59 8 8 8 8-3.59 8-8-3.59-8-8-8zm0 14c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/>
+      <path d="M12 10c-.55 0-1 .45-1 1s.45 1 1 1 .99-.45.99-1-.44-1-.99-1z"/>
+    </svg>
+);
+
+export const LEDLightIcon = ({ size = 18, color = "currentColor" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={size} height={size} fill={color}>
+      <path d="M12 2C7.58 2 4 5.58 4 10c0 4.42 3.58 8 8 8s8-3.58 8-8c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/>
+      <path d="M12 7c-.55 0-1 .45-1 1s.45 1 1 1 .99-.45.99-1S12.55 7 12 7z"/>
+    </svg>
+);
