@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview --port 3001"
+    "preview": "vite preview --port 3001",
+    "debug": "vite --debug hmr"
+    
   },
   "dependencies": {
     "axios": "^1.8.4",
@@ -26,5 +28,6 @@
     "globals": "^15.15.0",
     "prettier": "3.5.3",
     "vite": "^6.2.0"
-  }
+  },
+  "debug": "vite --debug hmr"
 }
