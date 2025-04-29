@@ -23,6 +23,7 @@ const DeviceInfo = ({ sensor }) => {
             <div key={index} className="gateway-compact">
               <p><strong>RSSI:</strong> {gw.rssi} dBm</p>
               <p><strong>SNR:</strong> {gw.snr}</p>
+              <p><strong>Pozicija: </strong>{gw.lat},{gw.lng}</p>
             </div>
           ))}
         </div>
@@ -79,7 +80,7 @@ const DataSection = ({ parsedData }) => {
                 {station.alarm.Alarm_battery_voltage_flat && <li>Batterija flat</li>}
                 {station.alarm.Alarm_lantern_communication_failed && <li>Svjetlo: Greška komunikacije</li>}
                 {station.alarm.Alarm_lantern_night_light_off && <li>Svjetlo: Ne radi po noći</li>} 
-                {station.alarm.Alarm_lantern_night_light_off && <li>Svjetlo: Radi po danu</li>} 
+                {station.alarm.Alarm_lantern_day_light_on && <li>Svjetlo: Radi po danu</li>} 
                 {station.alarm.Alarm_visibility_communication_failed && <li>Vaisala: greška komunikacije</li>} 
                 {station.alarm.Alarm_visibility_error && <li>Vaisala: greška!</li>} 
                 {station.alarm.Alarm_fog_signal_off_during_fog && <li>FOG: ne radi tijekom magle!</li>} 
