@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/SensorDataDisplay.css";
 import { parseBatteryPercentage } from "../utils/batteryUtils";
-import { parseSensorData } from "../utils/dataUtils";
+import { parseSensorData, bytesToBits } from "../utils/dataUtils";
 import { formatGatewayInfo } from "../utils/gatewayUtils";
 import { TemperatureIcon, BatteryIcon, NetworkErrorIcon, Sun, Moon } from "../assets/StatusIcons";
 import { SolarPanelIcon, ModemIcon, InternetIcon, BatteryLowIcon, BatteryFlatIcon, BatteryNormalIcon, VisibilityMeterIcon, LEDLightIcon } from "../assets/StatusIcons";
@@ -97,7 +97,7 @@ const DataSection = ({ parsedData }) => {
 
 const SensorCard = ({ sensor }) => {
   const parsedData = parseSensorData(sensor.data);
-  //const bitRepresentation = bytesToBits(parsedData.rawBytes);
+  const bitRepresentation = bytesToBits(parsedData.rawBytes);
 /*   console.log('Raw bytes as bits:');
     bitRepresentation.forEach((bits, index) =>  {
   console.log(`Byte ${index}: ${bytesToBits(bits)}`);
@@ -110,7 +110,7 @@ const SensorCard = ({ sensor }) => {
   
 
 
-{/* <div className="byte-debug">
+<div className="byte-debug">
   <h4>bits in bytes vizualizacija bitova  :/</h4>
   <div className="bit-grid">
     {bitRepresentation.map((bits, index) => (
@@ -124,7 +124,7 @@ const SensorCard = ({ sensor }) => {
       </div>
     ))}
   </div>
-</div> */}
+</div> 
       </div>
       
     </div>
