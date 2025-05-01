@@ -48,9 +48,9 @@ export function hexStringToBytes(hexString) {
       const byteSlice = dataBytes.slice(i, i + 4);
       const status = (byteSlice[0] << 8) | byteSlice[1];  
       const alarm = (byteSlice[2] << 8) | byteSlice[3];   
-      //const status = byteSlice[0] | (byteSlice[1] << 8);
-      //const alarm = byteSlice[2] | (byteSlice[3] << 8);
-      console.log(`Raw bytes: [${byteSlice.join(', ')}] → 16-bit: ${status} → Binary: ${status.toString(2).padStart(16, '0')}`);
+      //const status = byteSlice[0] | (byteSlice[1] << 8); LE
+      //const alarm = byteSlice[2] | (byteSlice[3] << 8); LE
+      //console.log(`Raw bytes: [${byteSlice.join(', ')}] → 16-bit: ${status} → Binary: ${status.toString(2).padStart(16, '0')}`);
       
       stations.push({
         //status1: decodeStatus(status1),
@@ -65,8 +65,8 @@ export function hexStringToBytes(hexString) {
   
   
   const BITS = {
-    BATTERY: 0b11,          // Bits 1-2
-    SOLAR_PANEL: 1 << 2,    // Bit 3
+    BATTERY: 0b00000011,          // Bits 1-2
+    SOLAR_PANEL: 0b00000100,    // Bit 3
     MODEM_POWER: 1 << 3,    // Bit 4
     INTERNET: 1 << 4,       // Bit 5
     LANTERN_COMMS: 1 << 5,  // Bit 6
@@ -95,6 +95,24 @@ export function hexStringToBytes(hexString) {
     Visibility_alarm: Boolean(statusValue & BITS.VISIBILITY_ALARM),
     FogCurrentActive: Boolean(statusValue & BITS.FOG_CURRENT)};
   };
+
+  export const ALARM_BITS = {
+    //  (LSB)
+    DATALOGGER_HIGH_TEMP: 0b00000000_00000001, // Bit 1
+    DATALOGGER_HIGH_VOLTAGE: 0b00000000_00000010,           // Bit 2
+    BATTERY_VOLTAGE_LOW: 0b00000000_00000100,               // Bit 3
+    BATTERY_VOLTAGE_FLAT: 0b00000000_00001000,              // Bit 4
+    MODEM_NETWORK_ERROR: 0b00000000_00010000,               // Bit 5
+    LANTERN_COMMUNICATION_FAILED: 0b00000000_00100000,      // Bit 6
+    LANTERN_NIGHT_LIGHT_OFF: 0b00000000_01000000,           // Bit 7
+    LANTERN_DAY_LIGHT_ON: 0b00000000_10000000,              // Bit 8
+  
+    //  (MSB)
+    VISIBILITY_COMMUNICATION_FAILED: 1 << 8,   // Bit 9
+    VISIBILITY_ERROR: 1 << 9,                  // Bit 10
+    FOG_SIGNAL_OFF_DURING_FOG: 1 << 10,        // Bit 11
+    FOG_SIGNAL_ON_NO_FOG: 1 << 11              // Bit 12
+  };
   // Alarm decoder for 16-bit values
   export const decodeAlarm = (alarmValue) => {
     // Input validation
@@ -104,18 +122,18 @@ export function hexStringToBytes(hexString) {
   
     return {
       code: alarmValue,
-      Alarm_datalogger_high_temp: Boolean(alarmValue & 0b00000000_00000001),
-      Alarm_datalogger_high_voltage: Boolean(alarmValue & (1 << 1)),
-      Alarm_battery_voltage_low: Boolean(alarmValue & (1 << 2)),
-      Alarm_battery_voltage_flat: Boolean(alarmValue & (1 << 3)),
-      Alarm_modem_network_error: Boolean(alarmValue & (1 << 4)),
-      Alarm_lantern_communication_failed: Boolean(alarmValue & (1 << 5)),
-      Alarm_lantern_night_light_off: Boolean(alarmValue & (1 << 6)),
-      Alarm_lantern_day_light_on: Boolean(alarmValue & (1 << 7)),
-      Alarm_visibility_communication_failed: Boolean(alarmValue & (1 << 8)),
-      Alarm_visibility_error: Boolean(alarmValue & (1 << 9)),
-      Alarm_fog_signal_off_during_fog: Boolean(alarmValue & (1 << 10)),
-      Alarm_fog_signal_on_while_no_fog: Boolean(alarmValue & (1 << 11))
+      Alarm_datalogger_high_temp: Boolean(alarmValue & ALARM_BITS.DATALOGGER_HIGH_TEMP),
+      Alarm_datalogger_high_voltage: Boolean(alarmValue & ALARM_BITS.DATALOGGER_HIGH_VOLTAGE),
+      Alarm_battery_voltage_low: Boolean(alarmValue & ALARM_BITS.BATTERY_VOLTAGE_LOW),
+      Alarm_battery_voltage_flat: Boolean(alarmValue & ALARM_BITS.BATTERY_VOLTAGE_FLAT),
+      Alarm_modem_network_error: Boolean(alarmValue & ALARM_BITS.MODEM_NETWORK_ERROR),
+      Alarm_lantern_communication_failed: Boolean(alarmValue & ALARM_BITS.LANTERN_COMMUNICATION_FAILED),
+      Alarm_lantern_night_light_off: Boolean(alarmValue & ALARM_BITS.LANTERN_NIGHT_LIGHT_OFF),
+      Alarm_lantern_day_light_on: Boolean(alarmValue & ALARM_BITS.LANTERN_DAY_LIGHT_ON),
+      Alarm_visibility_communication_failed: Boolean(alarmValue & ALARM_BITS.VISIBILITY_COMMUNICATION_FAILED),
+      Alarm_visibility_error: Boolean(alarmValue & ALARM_BITS.VISIBILITY_ERROR),
+      Alarm_fog_signal_off_during_fog: Boolean(alarmValue & ALARM_BITS.FOG_SIGNAL_OFF_DURING_FOG),
+      Alarm_fog_signal_on_while_no_fog: Boolean(alarmValue & ALARM_BITS.FOG_SIGNAL_ON_NO_FOG)
     };
   };
   

@@ -39,7 +39,7 @@ const BatteryStatus = ({ statusCode }) => {
     <div className={`battery-status ${status.color}`}>
       <span className="icon">{status.icon}</span>
       <div className="battery-status-info">
-        <p>Baterija: {status.state}</p>
+        <p>Baterija: {status.state}  - {status.description}</p>
       </div>
     </div>
   );
@@ -61,7 +61,7 @@ const DataSection = ({ parsedData }) => {
               <h6>Status:</h6>
               <ul className="status-list">
                 <li>status code: {station.status.codeNum}</li>
-                <li><BatteryStatus>Baterija:</BatteryStatus></li>
+                <li><BatteryStatus statusCode={station.status.codeNum}>Baterija:</BatteryStatus></li>
                 <li> Period dana: {station.status.Solar_panel_day_light ? <Sun /> : <Moon/>}</li>
                 <li><ModemIcon /> Modem: {station.status.Modem_power_state ? 'On' : 'Off'}</li>
                 <li><InternetIcon /> Internet: {station.status.Internet_connection_ok ? 'OK' : 'Greška'}</li>
@@ -111,7 +111,7 @@ const SensorCard = ({ sensor }) => {
   
 
 
-<div className="byte-debug">
+{/* <div className="byte-debug">
   <h4>bits in bytes vizualizacija bitova  :/</h4>
   <div className="bit-grid">
     {bitRepresentation.map((bits, index) => (
@@ -125,7 +125,7 @@ const SensorCard = ({ sensor }) => {
       </div>
     ))}
   </div>
-</div> 
+</div>  */}
       </div>
       
     </div>
