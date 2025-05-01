@@ -60,6 +60,7 @@ const DataSection = ({ parsedData }) => {
             <div className="status-group">
               <h6>Status:</h6>
               <ul className="status-list">
+                <li>status code: {station.status.codeNum}</li>
                 <li><BatteryStatus>Baterija:</BatteryStatus></li>
                 <li> Period dana: {station.status.Solar_panel_day_light ? <Sun /> : <Moon/>}</li>
                 <li><ModemIcon /> Modem: {station.status.Modem_power_state ? 'On' : 'Off'}</li>
