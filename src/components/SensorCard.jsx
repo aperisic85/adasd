@@ -98,7 +98,7 @@ const DataSection = ({ parsedData }) => {
 
 const SensorCard = ({ sensor }) => {
   const parsedData = parseSensorData(sensor.data);
-  const bitRepresentation = bytesToBits(parsedData.rawBytes);
+  const BitRepresentation = bytesToBits(parsedData.rawBytes);
 /*   console.log('Raw bytes as bits:');
     bitRepresentation.forEach((bits, index) =>  {
   console.log(`Byte ${index}: ${bytesToBits(bits)}`);
