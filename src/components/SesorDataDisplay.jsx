@@ -8,9 +8,8 @@ const SensorDataDisplay = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Replace these with your actual EUIs
-  const deviceEUIs = ["513F167B004A0024", "479196A500430032"]; // Example EUI values
 
+  const deviceEUIs = ["513F167B004A0024", "479196A500430032"]; 
   useEffect(() => {
     const fetchSensorData = async () => {
       try {
@@ -32,7 +31,7 @@ const SensorDataDisplay = () => {
     };
 
     fetchSensorData();
-  }, []);
+  }, );
 
   if (loading) return <p className="loading">Učitavam podatke...</p>;
   if (error) return <p className="error">{error}</p>;
