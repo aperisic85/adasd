@@ -16,7 +16,8 @@ const DeviceInfo = ({ sensor }) => {
       <p><strong>EUI:</strong> {sensor.EUI}</p>
       <p><strong>Baterija:</strong> {parseBatteryPercentage(sensor.bat)}</p>
       <p><strong>Posljednji podaci:</strong> {new Date(sensor.received_at).toLocaleString()}</p>
-      <div className="gateway-section">
+      <p><strong>Gateways: {gateways.length}</strong></p>
+{/*       <div className="gateway-section">
         <h5>Gateways ({gateways.length})</h5>
         <div className="compact-gateways">
           {gateways.map((gw, index) => (
@@ -27,7 +28,7 @@ const DeviceInfo = ({ sensor }) => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
@@ -49,7 +50,7 @@ const DataSection = ({ parsedData }) => {
   return (
     <div className="data-section">
         
-      <h4>Podaci</h4>
+     
       <div className="stations">
         {parsedData.stations.map((station, index) => (
           <div key={index} className="station-card">
@@ -59,7 +60,7 @@ const DataSection = ({ parsedData }) => {
             <div className="status-group">
               <h6>Status:</h6>
               <ul className="status-list">
-                <li>status code: {station.status.codeNum}</li>
+             {/*    <li>status code: {station.status.codeNum}</li> */}
                 <li><BatteryStatus statusCode={station.status.codeNum}>Baterija:</BatteryStatus></li>
                 <li> Period dana: {station.status.Solar_panel_day_light ? <Sun /> : <Moon/>}</li>
                 <li><ModemIcon /> Modem: {station.status.Modem_power_state ? 'On' : 'Off'}</li>
