@@ -97,21 +97,21 @@ export function hexStringToBytes(hexString) {
   };
 
   export const ALARM_BITS = {
-    //  (LSB)
-    DATALOGGER_HIGH_TEMP: 0b00000000_00000001, // Bit 1
-    DATALOGGER_HIGH_VOLTAGE: 0b00000000_00000010,           // Bit 2
-    BATTERY_VOLTAGE_LOW: 0b00000000_00000100,               // Bit 3
-    BATTERY_VOLTAGE_FLAT: 0b00000000_00001000,              // Bit 4
-    MODEM_NETWORK_ERROR: 0b00000000_00010000,               // Bit 5
-    LANTERN_COMMUNICATION_FAILED: 0b00000000_00100000,      // Bit 6
-    LANTERN_NIGHT_LIGHT_OFF: 0b00000000_01000000,           // Bit 7
-    LANTERN_DAY_LIGHT_ON: 0b00000000_10000000,              // Bit 8
+    //  (LSB) // prvi bit je uvijek 1 --- ne znam zašto
+    DATALOGGER_HIGH_TEMP: 0b00000000_00000010, // Bit 2
+    DATALOGGER_HIGH_VOLTAGE: 0b00000000_00000100,           // Bit 3
+    BATTERY_VOLTAGE_LOW: 0b00000000_00001000,               // Bit 4
+    BATTERY_VOLTAGE_FLAT: 0b00000000_00010000,              // Bit 5
+    MODEM_NETWORK_ERROR: 0b00000000_00100000,               // Bit 6
+    LANTERN_COMMUNICATION_FAILED: 0b00000000_01000000,      // Bit 7
+    LANTERN_NIGHT_LIGHT_OFF: 0b00000000_10000000,           // Bit 8
+    LANTERN_DAY_LIGHT_ON: 0b00000001_00000000,              // Bit 9
   
     //  (MSB)
-    VISIBILITY_COMMUNICATION_FAILED: 1 << 8,   // Bit 9
-    VISIBILITY_ERROR: 1 << 9,                  // Bit 10
-    FOG_SIGNAL_OFF_DURING_FOG: 1 << 10,        // Bit 11
-    FOG_SIGNAL_ON_NO_FOG: 1 << 11              // Bit 12
+    VISIBILITY_COMMUNICATION_FAILED: 1 << 9,   // Bit 10
+    VISIBILITY_ERROR: 1 << 10,                  // Bit 11
+    FOG_SIGNAL_OFF_DURING_FOG: 1 << 11,        // Bit 12
+    FOG_SIGNAL_ON_NO_FOG: 1 << 12              // Bit 13
   };
   // Alarm decoder for 16-bit values
   export const decodeAlarm = (alarmValue) => {
@@ -137,7 +137,7 @@ export function hexStringToBytes(hexString) {
     };
   };
   
-  // Helper function for big-endian byte conversion
+  //  big-endian byte conversion
   export const bytesToUInt16BE = (byteArray) => 
     (byteArray[0] << 8) | byteArray[1];
   

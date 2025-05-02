@@ -24,7 +24,7 @@ export const decodeBatteryState = (statusBits) => {
         state: 'Low',
         description: 'Battery low',
         color: 'yellow',
-        icon: '❓'
+        icon: '⚠️'
       };
       
     case 0b01: 
