@@ -11,8 +11,8 @@ const DeviceInfo = ({ sensor }) => {
   const gateways = formatGatewayInfo(sensor.gws);
   return (
     <div className="device-info">
-      <h3>Device Info</h3>
-      <p><strong>Naziv:</strong> {sensor.EUI === '513F167B004A0024' ? 'Izabela South' : 'Izabela North'}</p>
+      <h2>{sensor.EUI === '513F167B004A0024' ? 'Izabela South' : 'Izabela North'}</h2>
+     
       <p><strong>EUI:</strong> {sensor.EUI}</p>
       <p><strong>Baterija:</strong> {parseBatteryPercentage(sensor.bat)}</p>
       <p><strong>Posljednji podaci:</strong> {new Date(sensor.received_at).toLocaleString()}</p>
@@ -48,7 +48,6 @@ const BatteryStatus = ({ statusCode }) => {
 const DataSection = ({ parsedData }) => {
   return (
     <div className="data-section">
-      <h4>Station {parsedData.stationLabel}</h4>
         
       <h4>Podaci</h4>
       <div className="stations">
