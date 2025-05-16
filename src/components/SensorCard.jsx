@@ -3,7 +3,7 @@ import "../styles/SensorDataDisplay.css";
 import { parseBatteryPercentage } from "../utils/batteryUtils";
 import { parseSensorData, bytesToBits } from "../utils/dataUtils";
 import { formatGatewayInfo } from "../utils/gatewayUtils";
-import { TemperatureIcon, BatteryIcon, NetworkErrorIcon, Sun, Moon } from "../assets/StatusIcons";
+import { TemperatureIcon, BatteryIcon, NetworkErrorIcon, Sun, Moon, LEDLightActiveICon } from "../assets/StatusIcons";
 import { SolarPanelIcon, ModemIcon, InternetIcon, BatteryLowIcon, BatteryFlatIcon, BatteryNormalIcon, VisibilityMeterIcon, LEDLightIcon } from "../assets/StatusIcons";
 import { decodeBatteryState } from "../utils/batteryUtils";
 
@@ -67,6 +67,7 @@ const DataSection = ({ parsedData, sensor }) => {
                 <li><ModemIcon /> Modem: {station.status.Modem_power_state ? 'On' : 'Off'}</li>
                 <li><InternetIcon /> Internet: {station.status.Internet_connection_ok ? 'OK' : 'Greška'}</li>
                 <li><LEDLightIcon /> Svjetlo komunikacija: {station.status.Lantern_communication_ok ? 'OK' : 'Error'}</li>
+                <li><LEDLightActiveICon/>Svjetlo Aktivno : {station.status.Lantern_light_active ? 'DA' : 'NE'}</li>
                 <li><VisibilityMeterIcon/> Detektor magle:{station.status.Alarm_visibility_error ? 'Greška' : 'OK'}</li>
               </ul>
             </div>

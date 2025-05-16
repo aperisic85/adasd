@@ -67,14 +67,14 @@ export function hexStringToBytes(hexString) {
   const BITS = {
     BATTERY: 0b00000110,           // Biti 2-3 (prije 1-2)
     SOLAR_PANEL: 0b00001000,       // Bit 4 (prije 3)
-    MODEM_POWER: 1 << 4,           // Bit 5 (prije 4)
-    INTERNET: 1 << 5,              // Bit 6 (prije 5)
-    LANTERN_COMMS: 1 << 6,         // Bit 7 (prije 6)
-    LANTERN_LIGHT: 1 << 7,         // Bit 8 (prije 7)
-    LANTERN_CURRENT: 1 << 8,       // Bit 9 (prije 8)
-    VISIBILITY_COMMS: 1 << 9,      // Bit 10 (prije 9)
-    VISIBILITY_ALARM: 1 << 10,     // Bit 11 (prije 10)
-    FOG_CURRENT: 1 << 11           // Bit 12 (prije 11)
+    MODEM_POWER: 0b00010000,           // Bit 5 (prije 4)
+    INTERNET: 0b00100000,              // Bit 6 (prije 5)
+    LANTERN_COMMS: 0b01000000,         // Bit 7 (prije 6)
+    LANTERN_LIGHT: 0b10000000,         // Bit 8 (prije 7)
+    LANTERN_CURRENT: 0b100000000,       // Bit 9 (prije 8)
+    VISIBILITY_COMMS: 0b1000000000,      // Bit 10 (prije 9)
+    VISIBILITY_ALARM: 0b10000000000,     // Bit 11 (prije 10)
+    FOG_CURRENT: 0b100000000000           // Bit 12 (prije 11)
   };
   // Status decoder for 16-bit values
   export const decodeStatus = (statusValue) => {
