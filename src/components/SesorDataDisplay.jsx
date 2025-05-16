@@ -9,8 +9,8 @@ const SensorDataDisplay = () => {
   const [error, setError] = useState(null);
 
 
-  //const deviceEUIs = ["513F167B004A0024", "479196A500430032"]; 
-  const deviceEUIs = ["479196A500430032"]; 
+  const deviceEUIs = ["513F167B004A0024", "479196A500430032"]; 
+  //const deviceEUIs = ["479196A500430032"]; 
   useEffect(() => {
     const fetchSensorData = async () => {
       try {

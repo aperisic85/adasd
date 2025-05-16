@@ -54,7 +54,8 @@ const DataSection = ({ parsedData }) => {
       <div className="stations">
         {parsedData.stations.map((station, index) => (
           <div key={index} className="station-card">
-            <h5>Pozicija {String.fromCharCode(65 + index)}</h5>
+            
+            {index==0 ? <h5>Pozicija - Modem</h5> : EUI == '513F167B004A0024' ? <h5>Pozicija - {index + 1}</h5> : <h5>Pozicija - {index + 5}</h5>}
             
             {/* Status 1 */}
             <div className="status-group">
@@ -77,7 +78,7 @@ const DataSection = ({ parsedData }) => {
               <ul className="alarm-list">
                 {station.alarm.Alarm_datalogger_high_temp && <li>Datalogger: High Temp</li>}
                 {station.alarm.Alarm_battery_voltage_low && <li>Low Battery</li>}
-                {station.alarm.Alarm_modem_network_error && <li>Modem Error</li>}
+                {station.alarm.Alarm_modem_network_error && <li>Modem Network Error</li>}
                 {station.alarm.Alarm_battery_voltage_flat && <li>Batterija flat</li>}
                 {station.alarm.Alarm_lantern_communication_failed && <li>Svjetlo: Greška komunikacije</li>}
                 {station.alarm.Alarm_lantern_night_light_off && <li>Svjetlo: Ne radi po noći</li>} 
