@@ -46,7 +46,7 @@ const BatteryStatus = ({ statusCode }) => {
   );
 };
 
-const DataSection = ({ parsedData }) => {
+const DataSection = ({ parsedData, sensor }) => {
   return (
     <div className="data-section">
         
@@ -55,7 +55,7 @@ const DataSection = ({ parsedData }) => {
         {parsedData.stations.map((station, index) => (
           <div key={index} className="station-card">
             
-            {index==0 ? <h5>Pozicija - Modem</h5> : EUI == '513F167B004A0024' ? <h5>Pozicija - {index + 1}</h5> : <h5>Pozicija - {index + 5}</h5>}
+            {index==0 ? <h5>Pozicija - Modem</h5> : sensor.EUI == '513F167B004A0024' ? <h5>Pozicija - {index }</h5> : <h5>Pozicija - {index + 5}</h5>}
             
             {/* Status 1 */}
             <div className="status-group">
@@ -107,7 +107,7 @@ const SensorCard = ({ sensor }) => {
   return (
     <div className="sensor-card">
       <DeviceInfo sensor={sensor} />
-      <DataSection parsedData={parsedData} />
+      <DataSection parsedData={parsedData} sensor={sensor} />
       <div className="raw-data">
   
 
