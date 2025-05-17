@@ -3,7 +3,7 @@ import "../styles/SensorDataDisplay.css";
 import { parseBatteryPercentage } from "../utils/batteryUtils";
 import { parseSensorData, bytesToBits } from "../utils/dataUtils";
 import { formatGatewayInfo } from "../utils/gatewayUtils";
-import { TemperatureIcon, BatteryIcon, NetworkErrorIcon, Sun, Moon } from "../assets/StatusIcons";
+import { TemperatureIcon, BatteryIcon, NetworkErrorIcon, Sun, Moon, LEDLightActiveICon } from "../assets/StatusIcons";
 import { SolarPanelIcon, ModemIcon, InternetIcon, BatteryLowIcon, BatteryFlatIcon, BatteryNormalIcon, VisibilityMeterIcon, LEDLightIcon } from "../assets/StatusIcons";
 import { decodeBatteryState } from "../utils/batteryUtils";
 
@@ -11,12 +11,13 @@ const DeviceInfo = ({ sensor }) => {
   const gateways = formatGatewayInfo(sensor.gws);
   return (
     <div className="device-info">
-      <h3>Device Info</h3>
-      <p><strong>Naziv:</strong> {sensor.EUI === '513F167B004A0024' ? 'Izabela South' : 'Izabela North'}</p>
+      <h2>{sensor.EUI === '513F167B004A0024' ? 'Izabela South' : 'Izabela North'}</h2>
+     
       <p><strong>EUI:</strong> {sensor.EUI}</p>
       <p><strong>Baterija:</strong> {parseBatteryPercentage(sensor.bat)}</p>
       <p><strong>Posljednji podaci:</strong> {new Date(sensor.received_at).toLocaleString()}</p>
-      <div className="gateway-section">
+      <p><strong>Gateways: {gateways.length}</strong></p>
+{/*       <div className="gateway-section">
         <h5>Gateways ({gateways.length})</h5>
         <div className="compact-gateways">
           {gateways.map((gw, index) => (
@@ -27,7 +28,7 @@ const DeviceInfo = ({ sensor }) => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
@@ -45,27 +46,28 @@ const BatteryStatus = ({ statusCode }) => {
   );
 };
 
-const DataSection = ({ parsedData }) => {
+const DataSection = ({ parsedData, sensor }) => {
   return (
     <div className="data-section">
-      <h4>Station {parsedData.stationLabel}</h4>
         
-      <h4>Podaci</h4>
+     
       <div className="stations">
         {parsedData.stations.map((station, index) => (
           <div key={index} className="station-card">
-            <h5>Pozicija {String.fromCharCode(65 + index)}</h5>
+            
+            {index==0 ? <h5>Pozicija - Modem</h5> : sensor.EUI == '513F167B004A0024' ? <h5>Pozicija - {index }</h5> : <h5>Pozicija - {index + 5}</h5>}
             
             {/* Status 1 */}
             <div className="status-group">
               <h6>Status:</h6>
               <ul className="status-list">
-                <li>status code: {station.status.codeNum}</li>
+             {/*    <li>status code: {station.status.codeNum}</li> */}
                 <li><BatteryStatus statusCode={station.status.codeNum}>Baterija:</BatteryStatus></li>
                 <li> Period dana: {station.status.Solar_panel_day_light ? <Sun /> : <Moon/>}</li>
                 <li><ModemIcon /> Modem: {station.status.Modem_power_state ? 'On' : 'Off'}</li>
                 <li><InternetIcon /> Internet: {station.status.Internet_connection_ok ? 'OK' : 'Greška'}</li>
                 <li><LEDLightIcon /> Svjetlo komunikacija: {station.status.Lantern_communication_ok ? 'OK' : 'Error'}</li>
+                <li><LEDLightActiveICon/>Svjetlo Aktivno : {station.status.Lantern_light_active ? 'DA' : 'NE'}</li>
                 <li><VisibilityMeterIcon/> Detektor magle:{station.status.Alarm_visibility_error ? 'Greška' : 'OK'}</li>
               </ul>
             </div>
@@ -79,7 +81,7 @@ const DataSection = ({ parsedData }) => {
                 
                 {station.alarm.Alarm_datalogger_high_temp && <li>Datalogger: High Temp</li>}
                 {station.alarm.Alarm_battery_voltage_low && <li>Low Battery</li>}
-                {station.alarm.Alarm_modem_network_error && <li>Modem Error</li>}
+                {station.alarm.Alarm_modem_network_error && <li>Modem Network Error</li>}
                 {station.alarm.Alarm_battery_voltage_flat && <li>Batterija flat</li>}
                 {station.alarm.Alarm_lantern_communication_failed && <li>Svjetlo: Greška komunikacije</li>}
                 {station.alarm.Alarm_lantern_night_light_off && <li>Svjetlo: Ne radi po noći</li>} 
@@ -100,7 +102,7 @@ const DataSection = ({ parsedData }) => {
 
 const SensorCard = ({ sensor }) => {
   const parsedData = parseSensorData(sensor.data);
-  const bitRepresentation = bytesToBits(parsedData.rawBytes);
+  const BitRepresentation = bytesToBits(parsedData.rawBytes);
 /*   console.log('Raw bytes as bits:');
     bitRepresentation.forEach((bits, index) =>  {
   console.log(`Byte ${index}: ${bytesToBits(bits)}`);
@@ -108,7 +110,7 @@ const SensorCard = ({ sensor }) => {
   return (
     <div className="sensor-card">
       <DeviceInfo sensor={sensor} />
-      <DataSection parsedData={parsedData} />
+      <DataSection parsedData={parsedData} sensor={sensor} />
       <div className="raw-data">
   
 
