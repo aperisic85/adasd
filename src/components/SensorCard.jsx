@@ -74,7 +74,9 @@ const DataSection = ({ parsedData }) => {
             {/* Alarms */}
             <div className="alarms">
               <h6>Alarmi:</h6>
+              <h6>alarm value: {station.alarm.codeNum}</h6> 
               <ul className="alarm-list">
+                
                 {station.alarm.Alarm_datalogger_high_temp && <li>Datalogger: High Temp</li>}
                 {station.alarm.Alarm_battery_voltage_low && <li>Low Battery</li>}
                 {station.alarm.Alarm_modem_network_error && <li>Modem Error</li>}

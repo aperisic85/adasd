@@ -63,7 +63,7 @@ export function hexStringToBytes(hexString) {
     return { stationLabel, stations, rawBytes: bytes };
   }
   
-  
+  //bit 0 je kontrolni - uvijek je 1
   const BITS = {
     BATTERY: 0b00000011,          // Bits 1-2
     SOLAR_PANEL: 0b00000100,    // Bit 3
@@ -97,21 +97,20 @@ export function hexStringToBytes(hexString) {
   };
 
   export const ALARM_BITS = {
-    //  (LSB)
-    DATALOGGER_HIGH_TEMP: 0b00000000_00000001, // Bit 1
-    DATALOGGER_HIGH_VOLTAGE: 0b00000000_00000010,           // Bit 2
-    BATTERY_VOLTAGE_LOW: 0b00000000_00000100,               // Bit 3
-    BATTERY_VOLTAGE_FLAT: 0b00000000_00001000,              // Bit 4
-    MODEM_NETWORK_ERROR: 0b00000000_00010000,               // Bit 5
-    LANTERN_COMMUNICATION_FAILED: 0b00000000_00100000,      // Bit 6
-    LANTERN_NIGHT_LIGHT_OFF: 0b00000000_01000000,           // Bit 7
-    LANTERN_DAY_LIGHT_ON: 0b00000000_10000000,              // Bit 8
+    NOT_USED: 0b00000000_00000001,
+    DATALOGGER_HIGH_TEMP: 0b00000000_00000010, // Bit 1
+    DATALOGGER_HIGH_VOLTAGE: 0b00000000_00000100,           // Bit 2
+    BATTERY_VOLTAGE_LOW: 0b00000000_00001000,               // Bit 3
+    BATTERY_VOLTAGE_FLAT: 0b00000000_00010000,              // Bit 4
+    MODEM_NETWORK_ERROR: 0b00000000_00100000,               // Bit 5
+    LANTERN_COMMUNICATION_FAILED: 0b00000000_01000000,      // Bit 6
+    LANTERN_NIGHT_LIGHT_OFF: 0b00000000_10000000,           // Bit 7
+    LANTERN_DAY_LIGHT_ON: 0b00000001_00000000,              // Bit 8
   
-    //  (MSB)
-    VISIBILITY_COMMUNICATION_FAILED: 1 << 8,   // Bit 9
-    VISIBILITY_ERROR: 1 << 9,                  // Bit 10
-    FOG_SIGNAL_OFF_DURING_FOG: 1 << 10,        // Bit 11
-    FOG_SIGNAL_ON_NO_FOG: 1 << 11              // Bit 12
+    VISIBILITY_COMMUNICATION_FAILED: 1 << 9,   // Bit 9
+    VISIBILITY_ERROR: 1 << 10,                  // Bit 10
+    FOG_SIGNAL_OFF_DURING_FOG: 1 << 11,        // Bit 11
+    FOG_SIGNAL_ON_NO_FOG: 1 << 12              // Bit 12
   };
   // Alarm decoder for 16-bit values
   export const decodeAlarm = (alarmValue) => {
@@ -121,7 +120,7 @@ export function hexStringToBytes(hexString) {
     }
   
     return {
-      code: alarmValue,
+      codeNum: alarmValue,
       Alarm_datalogger_high_temp: Boolean(alarmValue & ALARM_BITS.DATALOGGER_HIGH_TEMP),
       Alarm_datalogger_high_voltage: Boolean(alarmValue & ALARM_BITS.DATALOGGER_HIGH_VOLTAGE),
       Alarm_battery_voltage_low: Boolean(alarmValue & ALARM_BITS.BATTERY_VOLTAGE_LOW),
