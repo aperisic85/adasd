@@ -29,7 +29,8 @@ export function hexStringToBytes(hexString) {
   export function parseSensorData(hexString) {
     // Validate minimum length: 1 byte label + at least 4 bytes per station
     if (!hexString || hexString.length < 10) { // 5 bytes = 10 hex characters
-      throw new Error('Invalid sensor data: minimum 5 bytes (10 hex characters) required');
+    throw new Error('Invalid sensor data: minimum 5 bytes (10 hex characters) required');
+     
     }
   
     const bytes = hexStringToBytes(hexString);
