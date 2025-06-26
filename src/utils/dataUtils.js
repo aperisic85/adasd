@@ -65,7 +65,8 @@ export function hexStringToBytes(hexString) {
   }
   
   //bit 0 je kontrolni - uvijek je 1
-  const BITS = {
+  const STATUS_BITS = {
+    ALWAYS_ON_1: 0b00000001,          // Bit 0
     BATTERY: 0b00000110,           // Bit 1-2 
     SOLAR_PANEL: 0b00001000,       // Bit 3 
     MODEM_POWER: 0b00010000,           // Bit 4
@@ -73,7 +74,7 @@ export function hexStringToBytes(hexString) {
     LANTERN_COMMS: 0b01000000,         // Bit 6 
     LANTERN_LIGHT: 0b10000000,         // Bit 7
     LANTERN_CURRENT: 0b100000000,       // Bit 8 
-    VISIBILITY_COMMS: 0b1000000000,      // Bit 19 
+    VISIBILITY_COMMS: 0b1000000000,      // Bit 9 
     VISIBILITY_ALARM: 0b10000000000,     // Bit 10
     FOG_CURRENT: 0b100000000000           // Bit 11 
   };
@@ -85,29 +86,29 @@ export function hexStringToBytes(hexString) {
     
     return{
     codeNum: statusValue,
-    Battery_status: statusValue & BITS.BATTERY,
-    Solar_panel_day_light: Boolean(statusValue & BITS.SOLAR_PANEL),
-    Modem_power_state: Boolean(statusValue & BITS.MODEM_POWER),
-    Internet_connection_ok: Boolean(statusValue & BITS.INTERNET),
-    Lantern_communication_ok: Boolean(statusValue & BITS.LANTERN_COMMS),
-    Lantern_light_active: Boolean(statusValue & BITS.LANTERN_LIGHT),
-    Lantern_current_active: Boolean(statusValue & BITS.LANTERN_CURRENT),
-    Visibility_communication_ok: Boolean(statusValue & BITS.VISIBILITY_COMMS),
-    Visibility_alarm: Boolean(statusValue & BITS.VISIBILITY_ALARM),
-    FogCurrentActive: Boolean(statusValue & BITS.FOG_CURRENT)};
+    Battery_status: statusValue & STATUS_BITS.BATTERY,
+    Solar_panel_day_light: Boolean(statusValue & STATUS_BITS.SOLAR_PANEL),
+    Modem_power_state: Boolean(statusValue & STATUS_BITS.MODEM_POWER),
+    Internet_connection_ok: Boolean(statusValue & STATUS_BITS.INTERNET),
+    Lantern_communication_ok: Boolean(statusValue & STATUS_BITS.LANTERN_COMMS),
+    Lantern_light_active: Boolean(statusValue & STATUS_BITS.LANTERN_LIGHT),
+    Lantern_current_active: Boolean(statusValue & STATUS_BITS.LANTERN_CURRENT),
+    Visibility_communication_ok: Boolean(statusValue & STATUS_BITS.VISIBILITY_COMMS),
+    Visibility_alarm: Boolean(statusValue & STATUS_BITS.VISIBILITY_ALARM),
+    FogCurrentActive: Boolean(statusValue & STATUS_BITS.FOG_CURRENT)};
   };
 
   export const ALARM_BITS = {
     NOT_USED: 0b00000000_00000001,
-    DATALOGGER_HIGH_TEMP: 0b00000000_00000010,
-    DATALOGGER_HIGH_VOLTAGE: 0b00000000_00000100,  
-    BATTERY_VOLTAGE_LOW: 0b00000000_00001000,
-    BATTERY_VOLTAGE_FLAT: 0b00000000_00010000,
-    MODEM_NETWORK_ERROR: 0b00000000_00100000,
-    LANTERN_COMMUNICATION_FAILED: 0b00000000_01000000,
-    LANTERN_NIGHT_LIGHT_OFF: 0b00000000_10000000,
+    DATALOGGER_HIGH_TEMP: 0b0000000000000010,
+    DATALOGGER_HIGH_VOLTAGE: 0b0000000000000100,  
+    BATTERY_VOLTAGE_LOW: 0b0000000000001000,
+    BATTERY_VOLTAGE_FLAT: 0b0000000000010000,
+    MODEM_NETWORK_ERROR: 0b0000000000100000,
+    LANTERN_COMMUNICATION_FAILED: 0b0000000001000000,
+    LANTERN_NIGHT_LIGHT_OFF: 0b0000000010000000,
     
-    LANTERN_DAY_LIGHT_ON: 0b00000001_00000000,
+    LANTERN_DAY_LIGHT_ON: 0b0000000100000000,
     VISIBILITY_COMMUNICATION_FAILED: 1 << 9,
     VISIBILITY_ERROR: 1 << 10,
     FOG_SIGNAL_OFF_DURING_FOG: 1 << 11,
