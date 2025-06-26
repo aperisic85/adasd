@@ -6,16 +6,30 @@ import { formatGatewayInfo } from "../utils/gatewayUtils";
 import { TemperatureIcon, BatteryIcon, NetworkErrorIcon, Sun, Moon, LEDLightActiveICon } from "../assets/StatusIcons";
 import { SolarPanelIcon, ModemIcon, InternetIcon, BatteryLowIcon, BatteryFlatIcon, BatteryNormalIcon, VisibilityMeterIcon, LEDLightIcon } from "../assets/StatusIcons";
 import { decodeBatteryState } from "../utils/batteryUtils";
+import { FaExclamationTriangle } from "react-icons/fa";
 
 const DeviceInfo = ({ sensor }) => {
   const gateways = formatGatewayInfo(sensor.gws);
+  const receivedDate = new Date(sensor.received_at);
+  const currentDate = new Date();
+  const isOlderThan24h = (currentDate - receivedDate) > 24 * 60 * 60 * 1000; // less than 24 hours
+
+
   return (
     <div className="device-info">
       <h2>{sensor.EUI === '513F167B004A0024' ? 'Izabela South' : 'Izabela North'}</h2>
      
       <p><strong>EUI:</strong> {sensor.EUI}</p>
       <p><strong>Baterija:</strong> {parseBatteryPercentage(sensor.bat)}</p>
-      <p><strong>Posljednji podaci:</strong> {new Date(sensor.received_at).toLocaleString()}</p>
+      <p>
+        <strong>Posljednji podaci:</strong> {receivedDate.toLocaleString()}
+        {isOlderThan24h && (
+          <span style={{ color: "red", marginLeft: "10px" }}>
+            <FaExclamationTriangle style={{ verticalAlign: "middle" }} />
+            &nbsp;Podaci su stariji od 24 sata!
+          </span>
+        )}
+      </p>
       <p><strong>Gateways: {gateways.length}</strong></p>
 {/*       <div className="gateway-section">
         <h5>Gateways ({gateways.length})</h5>
@@ -76,7 +90,6 @@ const DataSection = ({ parsedData, sensor }) => {
             {/* Alarms */}
             <div className="alarms">
               <h6>Alarmi:</h6>
-              <h6>alarm value: {station.alarm.codeNum}</h6> 
               <ul className="alarm-list">
                 
                 {station.alarm.Alarm_datalogger_high_temp && <li>Datalogger: High Temp</li>}

@@ -1,5 +1,5 @@
 import React from "react";
-import SensorDataDisplay from "./components/SesorDataDisplay";
+import SensorDataDisplay from "./components/SensorDataDisplay";
 
 function App() {
   return (
