@@ -12,8 +12,8 @@ const DeviceInfo = ({ sensor }) => {
   const gateways = formatGatewayInfo(sensor.gws);
   const receivedDate = new Date(sensor.received_at);
   const currentDate = new Date();
-  const isOlderThan24h = (currentDate - receivedDate) > 24 * 60 * 60 * 1000; // less than 24 hours
-
+  const isOlderThan24h = (currentDate - receivedDate) > 24 * 60 * 60 * 1000; // more than 24 hours
+  const recevideBeforeHoursAndMinutes = Math.floor((currentDate - receivedDate) / (1000 * 60 * 60));
 
   return (
     <div className="device-info">
@@ -22,7 +22,7 @@ const DeviceInfo = ({ sensor }) => {
       <p><strong>EUI:</strong> {sensor.EUI}</p>
       <p><strong>Baterija:</strong> {parseBatteryPercentage(sensor.bat)}</p>
       <p>
-        <strong>Posljednji podaci:</strong> {receivedDate.toLocaleString()}
+        <strong>Posljednji podaci:</strong> {receivedDate.toLocaleString()} (prije {recevideBeforeHoursAndMinutes} sati i {Math.floor((currentDate - receivedDate) / (1000 * 60)) % 60} minuta)
         {isOlderThan24h && (
           <span style={{ color: "red", marginLeft: "10px" }}>
             <FaExclamationTriangle style={{ verticalAlign: "middle" }} />
