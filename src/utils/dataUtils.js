@@ -49,10 +49,7 @@ export function hexStringToBytes(hexString) {
       const byteSlice = dataBytes.slice(i, i + 4);
       const status = (byteSlice[0] << 8) | byteSlice[1];  
       const alarm = (byteSlice[2] << 8) | byteSlice[3];   
-      //const status = byteSlice[0] | (byteSlice[1] << 8); LE
-      //const alarm = byteSlice[2] | (byteSlice[3] << 8); LE
-      //console.log(`Raw bytes: [${byteSlice.join(', ')}] → 16-bit: ${status} → Binary: ${status.toString(2).padStart(16, '0')}`);
-      
+    
       stations.push({
         //status1: decodeStatus(status1),
         status: decodeStatus(status),
@@ -66,18 +63,18 @@ export function hexStringToBytes(hexString) {
   
   //bit 0 je kontrolni - uvijek je 1
   const STATUS_BITS = {
-    ALWAYS_ON_1: 0b00000001,          // Bit 0
-    BATTERY: 0b00000110,           // Bit 1-2 
-    SOLAR_PANEL: 0b00001000,       // Bit 3 
-    MODEM_POWER: 0b00010000,           // Bit 4
-    INTERNET: 0b00100000,              // Bit 5 
-    LANTERN_COMMS: 0b01000000,         // Bit 6 
-    LANTERN_LIGHT: 0b10000000,         // Bit 7
-    LANTERN_CURRENT: 0b100000000,       // Bit 8 
-    VISIBILITY_COMMS: 0b1000000000,      // Bit 9 
-    VISIBILITY_ALARM: 0b10000000000,     // Bit 10
-    FOG_CURRENT: 0b100000000000           // Bit 11 
-  };
+    ALWAYS_ON_1:          1 << 0,  // Bit 0
+    BATTERY: (1 << 1) | (1 << 2),  // 0b110
+    SOLAR_PANEL:          1 << 3,  // Bit 3
+    MODEM_POWER:          1 << 4,  // Bit 4
+    INTERNET:             1 << 5,  // Bit 5
+    LANTERN_COMMS:        1 << 6,  // Bit 6
+    LANTERN_LIGHT:        1 << 7,  // Bit 7
+    LANTERN_CURRENT:      1 << 8,  // Bit 8
+    VISIBILITY_COMMS:     1 << 9,  // Bit 9
+    VISIBILITY_ALARM:     1 << 10, // Bit 10
+    FOG_CURRENT:          1 << 11  // Bit 11
+};
   // Status decoder for 16-bit values
   export const decodeStatus = (statusValue) => {
     if (typeof statusValue !== 'number' || statusValue < 0 || statusValue > 0xFFFF) {
@@ -99,21 +96,20 @@ export function hexStringToBytes(hexString) {
   };
 
   export const ALARM_BITS = {
-    NOT_USED: 0b00000000_00000001,
-    DATALOGGER_HIGH_TEMP: 0b0000000000000010,
-    DATALOGGER_HIGH_VOLTAGE: 0b0000000000000100,  
-    BATTERY_VOLTAGE_LOW: 0b0000000000001000,
-    BATTERY_VOLTAGE_FLAT: 0b0000000000010000,
-    MODEM_NETWORK_ERROR: 0b0000000000100000,
-    LANTERN_COMMUNICATION_FAILED: 0b0000000001000000,
-    LANTERN_NIGHT_LIGHT_OFF: 0b0000000010000000,
-    
-    LANTERN_DAY_LIGHT_ON: 0b0000000100000000,
+    NOT_USED:                     1 << 0,
+    DATALOGGER_HIGH_TEMP:         1 << 1,
+    DATALOGGER_HIGH_VOLTAGE:      1 << 2,
+    BATTERY_VOLTAGE_LOW:          1 << 3,
+    BATTERY_VOLTAGE_FLAT:         1 << 4,
+    MODEM_NETWORK_ERROR:          1 << 5,
+    LANTERN_COMMUNICATION_FAILED: 1 << 6,
+    LANTERN_NIGHT_LIGHT_OFF:      1 << 7,
+    LANTERN_DAY_LIGHT_ON:         1 << 8,
     VISIBILITY_COMMUNICATION_FAILED: 1 << 9,
-    VISIBILITY_ERROR: 1 << 10,
-    FOG_SIGNAL_OFF_DURING_FOG: 1 << 11,
-    FOG_SIGNAL_ON_NO_FOG: 1 << 12
-  };
+    VISIBILITY_ERROR:             1 << 10,
+    FOG_SIGNAL_OFF_DURING_FOG:    1 << 11,
+    FOG_SIGNAL_ON_NO_FOG:         1 << 12
+};
   // Alarm decoder for 16-bit values
   export const decodeAlarm = (alarmValue) => {
     // Input validation
