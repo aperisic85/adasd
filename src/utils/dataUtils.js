@@ -14,7 +14,7 @@ export function hexStringToBytes(hexString) {
   
     // Iterate over the string in steps of 2 characters
     for (let i = 0; i < hexString.length; i += 2) {
-      const byteValue = parseInt(hexString.slice(i, i + 2), 16); // Use slice instead of substr
+      const byteValue = parseInt(hexString.slice(i, i + 2), 16); 
       if (isNaN(byteValue)) {
         throw new Error(`Invalid hex byte at position ${i}`);
       }
@@ -51,10 +51,8 @@ export function hexStringToBytes(hexString) {
       const alarm = (byteSlice[2] << 8) | byteSlice[3];   
     
       stations.push({
-        //status1: decodeStatus(status1),
         status: decodeStatus(status),
         alarm: decodeAlarm(alarm),
-        //alarm2: decodeAlarm8Bit(alarm2)
       });
     }
   
@@ -63,17 +61,17 @@ export function hexStringToBytes(hexString) {
   
   //bit 0 je kontrolni - uvijek je 1
   const STATUS_BITS = {
-    ALWAYS_ON_1:          1 << 0,  // Bit 0
-    BATTERY: (1 << 1) | (1 << 2),  // 0b110
-    SOLAR_PANEL:          1 << 3,  // Bit 3
-    MODEM_POWER:          1 << 4,  // Bit 4
-    INTERNET:             1 << 5,  // Bit 5
-    LANTERN_COMMS:        1 << 6,  // Bit 6
-    LANTERN_LIGHT:        1 << 7,  // Bit 7
-    LANTERN_CURRENT:      1 << 8,  // Bit 8
-    VISIBILITY_COMMS:     1 << 9,  // Bit 9
-    VISIBILITY_ALARM:     1 << 10, // Bit 10
-    FOG_CURRENT:          1 << 11  // Bit 11
+    ALWAYS_ON_1:          1 << 0, 
+    BATTERY: (1 << 1) | (1 << 2),  
+    SOLAR_PANEL:          1 << 3,  
+    MODEM_POWER:          1 << 4,  
+    INTERNET:             1 << 5,  
+    LANTERN_COMMS:        1 << 6,  
+    LANTERN_LIGHT:        1 << 7,  
+    LANTERN_CURRENT:      1 << 8,  
+    VISIBILITY_COMMS:     1 << 9,  
+    VISIBILITY_ALARM:     1 << 10, 
+    FOG_CURRENT:          1 << 11  
 };
   // Status decoder for 16-bit values
   export const decodeStatus = (statusValue) => {
@@ -96,7 +94,7 @@ export function hexStringToBytes(hexString) {
   };
 
   export const ALARM_BITS = {
-    NOT_USED:                     1 << 0,
+    NOT_USED:                     1 << 0, //uvijek 1
     DATALOGGER_HIGH_TEMP:         1 << 1,
     DATALOGGER_HIGH_VOLTAGE:      1 << 2,
     BATTERY_VOLTAGE_LOW:          1 << 3,

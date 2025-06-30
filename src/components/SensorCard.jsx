@@ -54,7 +54,7 @@ const BatteryStatus = ({ statusCode }) => {
     <div className={`battery-status ${status.color}`}>
       <span className="icon">{status.icon}</span>
       <div className="battery-status-info">
-        <p>Baterija: {status.state}  - {status.description}</p>
+        <p>Baterija: {status.state}</p>
       </div>
     </div>
   );
@@ -91,7 +91,7 @@ const DataSection = ({ parsedData, sensor }) => {
             <div className="alarms">
               <h6>Alarmi:</h6>
               <ul className="alarm-list">
-                {station.alarm.codeNum}
+                {/*{station.alarm.codeNum}*/}
                 {station.alarm.Alarm_datalogger_high_temp && <li>Datalogger: High Temp</li>}
                 {station.alarm.Alarm_battery_voltage_low && <li>Low Battery</li>}
                 {station.alarm.Alarm_modem_network_error && <li>Modem Network Error</li>}
