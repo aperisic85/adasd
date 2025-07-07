@@ -72,22 +72,27 @@ const DataSection = ({ parsedData, sensor }) => {
             {index==0 ? <h5>Pozicija - Modem</h5> : sensor.EUI == '513F167B004A0024' ? <h5>Pozicija - {index }</h5> : <h5>Pozicija - {index + 5}</h5>}
             
             {/* Status 1 */}
+            
+            {station.status.codeNum && 1 === 1 ?
             <div className="status-group">
               <h6>Status:</h6>
               <ul className="status-list">
              {/*    <li>status code: {station.status.codeNum}</li> */}
                 <li><BatteryStatus statusCode={station.status.codeNum}>Baterija:</BatteryStatus></li>
-                <li> Period dana: {station.status.Solar_panel_day_light ? <Sun /> : <Moon/>}</li>
+                <li> Period dana:{station.status.Solar_panel_day_light ? <Sun /> : <Moon/>}</li>
                 <li><ModemIcon /> Modem: {station.status.Modem_power_state ? 'On' : 'Off'}</li>
                 <li><InternetIcon /> Internet: {station.status.Internet_connection_ok ? 'OK' : 'Greška'}</li>
-                <li><LEDLightIcon /> Svjetlo komunikacija: {station.status.Lantern_communication_ok ? 'OK' : 'Error'}</li>
+                <li><LEDLightIcon /> Svjetlo komunikacija: {station.status.Lantern_communication_ok ? 'OK' : 'Greška'}</li>
                 <li><LEDLightActiveICon/>Svjetlo Aktivno : {station.status.Lantern_light_active ? 'DA' : 'NE'}</li>
                 <li><VisibilityMeterIcon/> Detektor magle:{station.status.Alarm_visibility_error ? 'Greška' : 'OK'}</li>
               </ul>
             </div>
-
+            :
+            <h6>Status: Nema podataka sa datalogera!</h6>
+            }
             
             {/* Alarms */}
+            {station.status.codeNum && 1 === 1 ?
             <div className="alarms">
               <h6>Alarmi:</h6>
               <ul className="alarm-list">
@@ -104,7 +109,7 @@ const DataSection = ({ parsedData, sensor }) => {
                 {station.alarm.Alarm_fog_signal_off_during_fog && <li>FOG: ne radi tijekom magle!</li>} 
                 {station.alarm.Alarm_fog_signal_on_while_no_fog && <li>FOG: radi,a nema magle!</li>} 
               </ul>
-            </div>
+            </div>: <h6>Alarmi: Nema podataka sa datalogera</h6>}
           </div>
         ))}
       </div>
